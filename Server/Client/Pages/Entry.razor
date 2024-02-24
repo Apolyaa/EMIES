@@ -1,7 +1,12 @@
 ﻿@page "/entry"
 @using Microsoft.AspNetCore.Components
 
+@inject HttpClient httpClient
 @inject NavigationManager Manager
+@if (_isError)
+{
+    <p>@_error</p>
+}
 <h1>Авторизация</h1>
 <h3>Введите логин</h3>
 <input type="text" @oninput="(e) => _login = e.Value.ToString()"/>
