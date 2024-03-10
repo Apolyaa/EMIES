@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "LYokIOj7Cpn8HgbU+hINp8crgbsxhpcRJyKjVWHM+rvEeDig+2zuDwsLVsLn7Lmc28SXfzFKpHzBvPoX/P6gjg==",
+  "dgSpecHash": "3TKXhrui/gr3IfDINvcl7lkFzZeTB/RHvSIttHqlGkdEhlEHVfbnZLczLbm3d+NHozIbM12Z/d6HlmKWmTZupQ==",
   "success": true,
   "projectFilePath": "D:\\gitlab\\EMIES\\Server\\Server\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Apolya\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
+    "C:\\Users\\Apolya\\.nuget\\packages\\blazorcomponentbus\\2.2.0\\blazorcomponentbus.2.2.0.nupkg.sha512",
+    "C:\\Users\\Apolya\\.nuget\\packages\\blazored.modal\\7.2.0\\blazored.modal.7.2.0.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",

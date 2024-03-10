@@ -1,4 +1,66 @@
-﻿@page "/userinterface"
+﻿@using BlazorComponentBus;
+
+@page "/userinterface"
+
+@inject NavigationManager Manager
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+
+
 <h3>UserInterface</h3>
 
+<p>Выберите тип прибора</p>
+<select @onchange="(e) => SelectType(e.Value.ToString())">
+    @foreach(var type in _types)
+    {
+        <option>@type.Name</option>
+    }
+</select>
+<table border="1">
+    <caption>Таблица характеристик</caption>
+    <tr>
+        <th>Название</th>
+        <th>Тип значения</th>
+        <th>Значение</th>
+        <th>Единица измерения</th>
+        <th>Признак значимости</th>
+        <th>Действия</th>
+    </tr>
+    @if (_mainCharacteristics.Any())
+    {
+        @foreach (var characteristic in _mainCharacteristics)
+        {
+            <tr>
+                <th>@characteristic.Name</th>
+                <th>
+                    <select @onchange="(e) => SelectTypeCharacteristic(characteristic.Id, e.Value.ToString())">
+                        <option>Диапазон</option>
+                        <option>Число</option>
+                        <option>Строка</option>
+                        <option>Массив значений</option>
+                        <option>Булево значение (да, нет)</option>
+                    </select>
+                </th>
+                <th><input @oninput="(e) => AddCharacteristicValue(characteristic, e.Value.ToString())" type="text" /></th>
+                <th>
+                    <input @onchange="(e) => AddCharacteristicUnit(characteristic.Id, e.Value.ToString())" type="text" name="units" list="unitsname">
+                        <datalist id="unitsname">
+                        @foreach(var unit in _unitOfMesurements)
+                        {
+                            <option>@unit.Name</option>
+                        }
+                        </datalist>
+                </th>
+                <th>
+                    <input @onchange="(e) => AddIsEssential(characteristic.Id, bool.Parse(e.Value.ToString()))" type="checkbox" />
+                </th>
+                <th>
+                    <button @onclick="() => DeleteCharacteristic(characteristic)">Удалить</button>
+                </th>
+            </tr>
+        }
+    }
 
+</table>
+<button @onclick="() => AddCharacteristic()">Добавить характеристику</button>
+<button @onclick="() => FindDevices()">Подобрать приборы</button>

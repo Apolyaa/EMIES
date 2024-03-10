@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
     },
     {
+      "Id": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Client.styles.css",
+      "PackagePath": "staticwebassets\\Client.styles.css"
+    },
+    {
       "Id": "D:\\gitlab\\EMIES\\Server\\Client\\wwwroot\\css\\app.css",
       "PackagePath": "staticwebassets\\css\\app.css"
     },

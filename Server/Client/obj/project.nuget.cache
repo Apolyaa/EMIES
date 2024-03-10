@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "58B1CoBDiijO1S1O8M87LNQHsV42+n1aiQ1OnUGWwFzkX6gG+49xVAY0A6UvReJUAUQKO4B6MxUqOG46Qj5Sig==",
+  "dgSpecHash": "ySZM1VzgM45k07X4920CmeFYhDDiZO76nqqLxB9ASycpJOCapZmyltH6JXLdiW7qcXixZvJDZ3kyy+Ma1hIHRg==",
   "success": true,
   "projectFilePath": "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Apolya\\.nuget\\packages\\blazorcomponentbus\\2.2.0\\blazorcomponentbus.2.2.0.nupkg.sha512",
+    "C:\\Users\\Apolya\\.nuget\\packages\\blazored.modal\\7.2.0\\blazored.modal.7.2.0.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.9\\microsoft.aspnetcore.authorization.7.0.9.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\microsoft.aspnetcore.components\\7.0.9\\microsoft.aspnetcore.components.7.0.9.nupkg.sha512",
     "C:\\Users\\Apolya\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\7.0.9\\microsoft.aspnetcore.components.analyzers.7.0.9.nupkg.sha512",

@@ -51,3 +51,5 @@ D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\Microsoft.JSInterop.dll
 D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\Microsoft.JSInterop.WebAssembly.dll
 D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\Client.dll
 D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\Client.pdb
+D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\BlazorComponentBus.dll
+D:\gitlab\EMIES\Server\Server\bin\Debug\net7.0\Blazored.Modal.dll

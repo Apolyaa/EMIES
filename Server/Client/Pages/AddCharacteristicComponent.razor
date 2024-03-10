@@ -1,0 +1,30 @@
+﻿@using BlazorComponentBus;
+
+@inject NavigationManager Manager
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+
+<p>Поиск</p>
+<input type="text" @oninput="(e) => _findText = e.Value.ToString()" />
+<table border="1">
+    @foreach (var characteristic in _characteristics)
+    {
+        <tr>
+            @if (_findText is not null)
+            {
+                @if (characteristic.Name.ToLower().Contains(_findText.ToLower()))
+                {
+                    <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+                }
+            }
+            else
+            {
+                <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+            }
+        </tr>
+    }
+</table>
+<button @onclick="() => AddCharacteristic()">Выбрать</button>
+
+
+

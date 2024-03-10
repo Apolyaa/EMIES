@@ -18,6 +18,36 @@
           }
         }
       },
+      "BlazorComponentBus/2.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BlazorComponentBus.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/BlazorComponentBus.dll": {}
+        }
+      },
+      "Blazored.Modal/7.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.25",
+          "Microsoft.AspNetCore.Components.Web": "6.0.3",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.JSInterop.WebAssembly": "6.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Blazored.Modal.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Blazored.Modal.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazored.Modal.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazored.Modal.props": {}
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -1262,6 +1292,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "BlazorComponentBus": "2.2.0",
+          "Blazored.Modal": "7.2.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "7.0.9"
         },
         "compile": {
@@ -1287,6 +1319,37 @@
         "icon.png",
         "lib/net6.0/AutoMapper.dll",
         "lib/net6.0/AutoMapper.xml"
+      ]
+    },
+    "BlazorComponentBus/2.2.0": {
+      "sha512": "pg25LDBXs6r+D2GWRLsomlLTJFQXokk46n5ftLh0i6FJmOcjKpgH0uv//tF8PgAo39L74cVFpQtzBkwSNfkR9g==",
+      "type": "package",
+      "path": "blazorcomponentbus/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazorcomponentbus.2.2.0.nupkg.sha512",
+        "blazorcomponentbus.nuspec",
+        "lib/net6.0/BlazorComponentBus.dll"
+      ]
+    },
+    "Blazored.Modal/7.2.0": {
+      "sha512": "2OtG46zNEk1BRQGzL22wUPTc3JS2meN2BmSns7eLUPORTSK7Bs37NnpZsRHlDs8zJ40NBVn7dG/okwTH+5C7iw==",
+      "type": "package",
+      "path": "blazored.modal/7.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazored.modal.7.2.0.nupkg.sha512",
+        "blazored.modal.nuspec",
+        "build/Blazored.Modal.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Blazored.Modal.props",
+        "buildTransitive/Blazored.Modal.props",
+        "icon.png",
+        "lib/net6.0/Blazored.Modal.dll",
+        "staticwebassets/Blazored.Modal.bundle.scp.css",
+        "staticwebassets/BlazoredModal.razor.js"
       ]
     },
     "Humanizer.Core/2.14.1": {

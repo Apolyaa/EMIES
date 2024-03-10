@@ -1,6 +1,5 @@
 ﻿using Client.Contracts;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace Client.Pages
 {

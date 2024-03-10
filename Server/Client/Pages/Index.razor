@@ -1,11 +1,16 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
+@using Blazored.Modal
+@using Microsoft.AspNetCore.Components.Routing
 
 @inject NavigationManager Manager
 <h1>Hello, world!</h1>
+<CascadingBlazoredModal>  
+
+</CascadingBlazoredModal> 
 @code{
     protected override void OnInitialized()
     {
-        Manager.NavigateTo("/entry");
+        Manager.NavigateTo("/userinterface");
     }
 }

@@ -30,6 +30,28 @@
           }
         }
       },
+      "BlazorComponentBus/2.2.0": {
+        "runtime": {
+          "lib/net6.0/BlazorComponentBus.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Blazored.Modal/7.2.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "7.0.9",
+          "Microsoft.AspNetCore.Components.Web": "7.0.9",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "Microsoft.JSInterop.WebAssembly": "7.0.9"
+        },
+        "runtime": {
+          "lib/net6.0/Blazored.Modal.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "runtime": {
           "lib/net6.0/Humanizer.dll": {
@@ -576,6 +598,8 @@
       "System.Threading.Tasks.Extensions/4.5.1": {},
       "Client/1.0.0": {
         "dependencies": {
+          "BlazorComponentBus": "2.2.0",
+          "Blazored.Modal": "7.2.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "7.0.9"
         },
         "runtime": {
@@ -596,6 +620,20 @@
       "sha512": "sha512-/Fx1SbJ16qS7dU4i604Sle+U9VLX+WSNVJggk6MupKVkYvvBm4XqYaeFuf67diHefHKHs50uQIS2YEDFhPCakQ==",
       "path": "automapper/13.0.1",
       "hashPath": "automapper.13.0.1.nupkg.sha512"
+    },
+    "BlazorComponentBus/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pg25LDBXs6r+D2GWRLsomlLTJFQXokk46n5ftLh0i6FJmOcjKpgH0uv//tF8PgAo39L74cVFpQtzBkwSNfkR9g==",
+      "path": "blazorcomponentbus/2.2.0",
+      "hashPath": "blazorcomponentbus.2.2.0.nupkg.sha512"
+    },
+    "Blazored.Modal/7.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2OtG46zNEk1BRQGzL22wUPTc3JS2meN2BmSns7eLUPORTSK7Bs37NnpZsRHlDs8zJ40NBVn7dG/okwTH+5C7iw==",
+      "path": "blazored.modal/7.2.0",
+      "hashPath": "blazored.modal.7.2.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
