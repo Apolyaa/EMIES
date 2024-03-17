@@ -33,7 +33,7 @@ namespace Server.Repositories
             _context.Entry(producer).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             ProducerEntity producer = _context.Producers.Find(id);
             if (producer != null)

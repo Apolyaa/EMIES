@@ -22,5 +22,32 @@ namespace Server.Controllers
 
             return Ok(result);
         }
+        [HttpPut("/addunit")]
+        [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> AddUnit([FromBody] UnitOfMesurementDto unitOfMesurementDto)
+        {
+
+            var result = _unitOfMeasurementService.AddUnit(unitOfMesurementDto);
+
+            return Ok(result);
+        }
+        [HttpPost("/updateunit")]
+        [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateUnit([FromBody] UnitOfMesurementDto unitOfMesurementDto)
+        {
+
+            var result = _unitOfMeasurementService.UpdateUnit(unitOfMesurementDto);
+
+            return Ok(result);
+        }
+        [HttpDelete("/deleteunit")]
+        [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteUnit([FromBody] Guid unitId)
+        {
+
+            var result = _unitOfMeasurementService.DeleteUnit(unitId);
+
+            return Ok(result);
+        }
     }
 }

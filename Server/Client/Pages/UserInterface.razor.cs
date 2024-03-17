@@ -1,4 +1,5 @@
 ﻿using BlazorComponentBus;
+using Blazored.Modal;
 using Blazored.Modal.Services;
 using Client.Contracts;
 using Microsoft.AspNetCore.Components;
@@ -26,6 +27,10 @@ namespace Client.Pages
         public Guid _selectType;
         public string _error = string.Empty;
         public bool _IsError;
+        public RequestFind _userRequest = new(); 
+        public ResultDto _result = new();
+        public IModalReference _addCharacteristic;
+        public IModalReference _resultShow;
         protected override async Task OnParametersSetAsync()
         {
             var response = await httpClient.GetAsync("http://localhost:5102/gettypes");
@@ -72,13 +77,14 @@ namespace Client.Pages
 
         public void AddCharacteristic()
         {
-            Modal.Show<AddCharacteristicComponent>("Добавление характеристики");
+            _addCharacteristic = Modal.Show<AddCharacteristicComponent>("Добавление характеристики");
         }
         public async Task AddCharacteristicInTable(MessageArgs message, CancellationToken token)
         {
             if (message is null)
                 return;
             _mainCharacteristics.Add(message.GetMessage<DictionaryOfCharacteristicDto>());
+            _addCharacteristic.Close();
             StateHasChanged();
         }
         public void AddCharacteristicValue(DictionaryOfCharacteristicDto characteristicDto, string value)
@@ -115,8 +121,18 @@ namespace Client.Pages
             if (_sourceCharacteristics.ContainsKey(characteristicDto.Id))
                 _sourceCharacteristics.Remove(characteristicDto.Id);
         }
-        public void FindDevices()
+        public async Task FindDevices()
         {
+            _userRequest.Characteristics = _sourceCharacteristics.Values.ToList();
+            _userRequest.TypeId = _selectType;
+            var response = await httpClient.PostAsJsonAsync("http://localhost:5102/finddevices", _userRequest);
+            var result = await response.Content.ReadFromJsonAsync<Response<ResultDto>>();
+            if (result is not null && result.Success)
+                _result = result.Data!;
+            else
+                _error = result.Message!;
+            var parameters = new ModalParameters().Add(nameof(ResultShowComponent.Result), _result);
+            _resultShow = Modal.Show<ResultShowComponent>("Результат подбора оборудования", parameters);
 
         }
         private async ValueTask DisposeAsync()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Client.Contracts;
+using Server.EfCore.Model;
 using Server.Repositories;
 
 namespace Server.Services
@@ -7,19 +8,16 @@ namespace Server.Services
     public class DictionaryOfCharacteristicService : IDictionaryOfCharacteristicService
     {
         private readonly IDictionaryOfCharacteristicRepository _dictionaryOfCharacteristicRepository;
-        private readonly ISynonymService _synonymService;
         private readonly IUnitOfMeasurementService _unitOfMeasurementService;
         protected readonly IMapper _mapper;
 
         public DictionaryOfCharacteristicService(
             IDictionaryOfCharacteristicRepository dictionaryOfCharacteristic, 
             IMapper mapper,
-            ISynonymService synonymService,
             IUnitOfMeasurementService unitOfMeasurementService)
         {
             _dictionaryOfCharacteristicRepository = dictionaryOfCharacteristic;
             _mapper = mapper;
-            _synonymService = synonymService;
             _unitOfMeasurementService = unitOfMeasurementService;
         }
 
@@ -35,11 +33,6 @@ namespace Server.Services
                     if (characteristicsId.Contains(characteristic.Id))
                     {
                         var charact = _mapper.Map<DictionaryOfCharacteristicDto>(characteristic);
-
-                        var responseSynonyms = _synonymService.GetSynonymsByCharacteristicId(characteristic.Id);
-                        if (!responseSynonyms.Success)
-                            throw new Exception("Error get synonyms for characteristic");
-                        charact.Synonyms = responseSynonyms.Data!;
 
                         response.Data.Add(charact);
                     }
@@ -68,11 +61,6 @@ namespace Server.Services
                 {
                     var charact = _mapper.Map<DictionaryOfCharacteristicDto>(characteristic);
 
-                    var responseSynonyms = _synonymService.GetSynonymsByCharacteristicId(characteristic.Id);
-                    if (!responseSynonyms.Success)
-                        throw new Exception("Error get synonyms for characteristic");
-                    charact.Synonyms = responseSynonyms.Data!;
-
                     response.Data.Add(charact);
                 }
                 return response;
@@ -83,6 +71,68 @@ namespace Server.Services
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
                 response.Message = "Ошибка при получении характеристик.";
+                return response;
+            }
+        }
+        public Response<bool> AddCharacteristic(DictionaryOfCharacteristicDto dictionaryOfCharacteristicDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var dictionaryOfCharacteristicEntity = _mapper.Map<DictionaryOfCharacteristicEntity>(dictionaryOfCharacteristicDto);
+                dictionaryOfCharacteristicEntity.Synonyms = dictionaryOfCharacteristicDto.Synonyms.ToArray();
+
+                _dictionaryOfCharacteristicRepository.Insert(dictionaryOfCharacteristicEntity);
+                _dictionaryOfCharacteristicRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add characteristic failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при добавлении характеристики.";
+                return response;
+            }
+        }
+        public Response<bool> DeleteCharacteristic(Guid characteristicId)
+        {
+            Response<bool> response = new();
+            try
+            {
+                _dictionaryOfCharacteristicRepository.Delete(characteristicId);
+                _dictionaryOfCharacteristicRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Remove characteristic failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при удалении характеристики.";
+                return response;
+            }
+        }
+        public Response<bool> UpdateCharacteristic(DictionaryOfCharacteristicDto dictionaryOfCharacteristicDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var dictionaryOfCharacteristicEntity = _mapper.Map<DictionaryOfCharacteristicEntity>(dictionaryOfCharacteristicDto);
+                dictionaryOfCharacteristicEntity.Synonyms = dictionaryOfCharacteristicDto.Synonyms.ToArray();
+                _dictionaryOfCharacteristicRepository.Update(dictionaryOfCharacteristicEntity);
+                _dictionaryOfCharacteristicRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Update characteristic failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при изменении характеристики.";
                 return response;
             }
         }

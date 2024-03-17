@@ -8,7 +8,7 @@ namespace Server.Repositories
         DictionaryOfCharacteristicEntity GetById(int id);
         void Insert(DictionaryOfCharacteristicEntity dictionaryOfCharacteristic);
         void Update(DictionaryOfCharacteristicEntity dictionaryOfCharacteristic);
-        void Delete(int id);
+        void Delete(Guid id);
         void Save();
     }
 }

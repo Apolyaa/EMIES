@@ -1,0 +1,23 @@
+﻿<table>
+    <tr>
+        <th>Название прибора</th>
+        <th>Процент совпадения важных характеристик</th>
+        <th>Процент совпадения дополнительных характеристик</th>
+        <th>Цена</th>
+        <th>Ссылка на источник</th>
+        <th>Действия</th>
+    </tr>
+    @foreach(var device in Result.Devices)
+    {
+        <tr>
+            <th>@device.Name</th>
+            <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentEssential</th>
+            <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentUnessential</th>
+            <th>@device.Price</th>
+            <th>@device.Url</th>
+
+        </tr>
+    }
+</table>
+
+

@@ -30,10 +30,11 @@ namespace Server.Repositories
 
         public void Update(DictionaryOfCharacteristicEntity dictionaryOfCharacteristic)
         {
-            _context.Entry(dictionaryOfCharacteristic).State = EntityState.Modified;
+            Delete(dictionaryOfCharacteristic.Id);
+            Insert(dictionaryOfCharacteristic);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             DictionaryOfCharacteristicEntity dictionaryOfCharacteristic = _context.DictionaryOfCharacteristics.Find(id);
             if (dictionaryOfCharacteristic != null)

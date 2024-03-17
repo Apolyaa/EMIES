@@ -12,7 +12,7 @@ using Server.Model;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240310141349_Init")]
+    [Migration("20240317112424_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -38,11 +38,18 @@ namespace Server.Migrations
                     b.Property<bool>("BooleanValue")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
                     b.Property<double>("MaxValue")
                         .HasColumnType("double precision");
 
                     b.Property<double>("MinValue")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<double>("NumberValue")
                         .HasColumnType("double precision");
@@ -62,6 +69,8 @@ namespace Server.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
 
                     b.HasIndex("UnitOfMeasurementId");
 
@@ -114,6 +123,10 @@ namespace Server.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string[]>("Synonyms")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.HasKey("Id");
 
@@ -214,26 +227,6 @@ namespace Server.Migrations
                     b.ToTable("Sources");
                 });
 
-            modelBuilder.Entity("Server.EfCore.Model.SynonymEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CharacteristicId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacteristicId");
-
-                    b.ToTable("Synonyms");
-                });
-
             modelBuilder.Entity("Server.EfCore.Model.TypeCharacteristicEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -319,11 +312,19 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.EfCore.Model.CharacteristicEntity", b =>
                 {
+                    b.HasOne("Server.EfCore.Model.DeviceEntity", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.EfCore.Model.UnitOfMeasurementEntity", "UnitOfMeasurement")
                         .WithMany()
                         .HasForeignKey("UnitOfMeasurementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Device");
 
                     b.Navigation("UnitOfMeasurement");
                 });
@@ -383,15 +384,6 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Server.EfCore.Model.SynonymEntity", b =>
-                {
-                    b.HasOne("Server.EfCore.Model.DictionaryOfCharacteristicEntity", "Characteristic")
-                        .WithMany()
-                        .HasForeignKey("CharacteristicId");
-
-                    b.Navigation("Characteristic");
                 });
 
             modelBuilder.Entity("Server.EfCore.Model.TypeCharacteristicEntity", b =>

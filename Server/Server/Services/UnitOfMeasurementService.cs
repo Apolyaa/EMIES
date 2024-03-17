@@ -1,17 +1,18 @@
 ﻿using AutoMapper;
 using Client.Contracts;
+using Server.EfCore.Model;
 using Server.Repositories;
 
 namespace Server.Services
 {
     public class UnitOfMeasurementService : IUnitOfMeasurementService
     {
-        private readonly IUnitOfMeasurementRepository _unitOfMeasurementService;
+        private readonly IUnitOfMeasurementRepository _unitOfMeasurementRepository;
         protected readonly IMapper _mapper;
 
-        public UnitOfMeasurementService(IUnitOfMeasurementRepository unitOfMeasurementService, IMapper mapper)
+        public UnitOfMeasurementService(IUnitOfMeasurementRepository unitOfMeasurementRepository, IMapper mapper)
         {
-            _unitOfMeasurementService = unitOfMeasurementService;
+            _unitOfMeasurementRepository = unitOfMeasurementRepository;
             _mapper = mapper;
         }
 
@@ -21,7 +22,7 @@ namespace Server.Services
             response.Data = new();
             try
             {
-                var units = _unitOfMeasurementService.GetAll();
+                var units = _unitOfMeasurementRepository.GetAll();
                 foreach (var unit in units)
                 {
                    response.Data.Add(_mapper.Map<UnitOfMesurementDto>(unit));
@@ -34,6 +35,84 @@ namespace Server.Services
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
                 response.Message = "Ошибка при получении единиц измерения.";
+                return response;
+            }
+        }
+        public Response<UnitOfMesurementDto> GetUnitByName(string name)
+        {
+            Response<UnitOfMesurementDto> response = new();
+            try
+            {
+                var unit = _unitOfMeasurementRepository.GetAll().FirstOrDefault(u => u.Name == name);
+                response.Data = _mapper.Map<UnitOfMesurementDto>(unit);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Get unit by name failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при получении единицы измерения по названию.";
+                return response;
+            }
+        }
+        public Response<bool> AddUnit(UnitOfMesurementDto unitOfMesurementDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var producerEntity = _mapper.Map<UnitOfMeasurementEntity>(unitOfMesurementDto);
+
+                _unitOfMeasurementRepository.Insert(producerEntity);
+                _unitOfMeasurementRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add unit failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при добавлении единицы измерения.";
+                return response;
+            }
+        }
+        public Response<bool> DeleteUnit(Guid id)
+        {
+            Response<bool> response = new();
+            try
+            {
+                _unitOfMeasurementRepository.Delete(id);
+                _unitOfMeasurementRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Remove unit failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при удалении единицы измерения.";
+                return response;
+            }
+        }
+        public Response<bool> UpdateUnit(UnitOfMesurementDto unitOfMesurementDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var unitEntity = _mapper.Map<UnitOfMeasurementEntity>(unitOfMesurementDto);
+                _unitOfMeasurementRepository.Update(unitEntity);
+                _unitOfMeasurementRepository.Save();
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Update unit failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при изменении единицы измерения.";
                 return response;
             }
         }

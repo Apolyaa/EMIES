@@ -1,0 +1,10 @@
+﻿@using BlazorComponentBus;
+
+@inject IComponentBus Bus
+@inject HttpClient httpClient
+
+<p>Введите название характеристики</p>
+<input type="text" @oninput="(e) => _characteristic.Name = e.Value.ToString()"/>
+<p>Введите синонимы через запятую</p>
+<input type="text" @oninput="(e) => _stringSynonyms = e.Value.ToString()"/>
+<button @onclick="() => AddCharacteristic()">Добавить характеристику в словарь</button>

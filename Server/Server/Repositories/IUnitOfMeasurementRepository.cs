@@ -8,7 +8,7 @@ namespace Server.Repositories
         UnitOfMeasurementEntity GetById(int id);
         void Insert(UnitOfMeasurementEntity unitOfMeasurement);
         void Update(UnitOfMeasurementEntity unitOfMeasurement);
-        void Delete(int id);
+        void Delete(Guid id);
         void Save();
     }
 }

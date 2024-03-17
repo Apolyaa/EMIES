@@ -16,7 +16,8 @@ namespace Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Synonyms = table.Column<string[]>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,24 +94,6 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Synonyms",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    CharacteristicId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Synonyms", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Synonyms_DictionaryOfCharacteristics_CharacteristicId",
-                        column: x => x.CharacteristicId,
-                        principalTable: "DictionaryOfCharacteristics",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Devices",
                 columns: table => new
                 {
@@ -171,32 +154,6 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Characteristics",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    MinValue = table.Column<double>(type: "double precision", nullable: false),
-                    MaxValue = table.Column<double>(type: "double precision", nullable: false),
-                    NumberValue = table.Column<double>(type: "double precision", nullable: false),
-                    StringValue = table.Column<string>(type: "text", nullable: false),
-                    ArrayOfValues = table.Column<string[]>(type: "text[]", nullable: false),
-                    BooleanValue = table.Column<bool>(type: "boolean", nullable: false),
-                    Type = table.Column<string>(type: "text", nullable: false),
-                    UnitId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UnitOfMeasurementId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Characteristics", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Characteristics_UnitOfMeasurements_UnitOfMeasurementId",
-                        column: x => x.UnitOfMeasurementId,
-                        principalTable: "UnitOfMeasurements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Results",
                 columns: table => new
                 {
@@ -211,6 +168,40 @@ namespace Server.Migrations
                         name: "FK_Results_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Characteristics",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    MinValue = table.Column<double>(type: "double precision", nullable: false),
+                    MaxValue = table.Column<double>(type: "double precision", nullable: false),
+                    NumberValue = table.Column<double>(type: "double precision", nullable: false),
+                    StringValue = table.Column<string>(type: "text", nullable: false),
+                    ArrayOfValues = table.Column<string[]>(type: "text[]", nullable: false),
+                    BooleanValue = table.Column<bool>(type: "boolean", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    UnitId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DeviceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UnitOfMeasurementId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Characteristics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Characteristics_Devices_DeviceId",
+                        column: x => x.DeviceId,
+                        principalTable: "Devices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Characteristics_UnitOfMeasurements_UnitOfMeasurementId",
+                        column: x => x.UnitOfMeasurementId,
+                        principalTable: "UnitOfMeasurements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,6 +233,11 @@ namespace Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Characteristics_DeviceId",
+                table: "Characteristics",
+                column: "DeviceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characteristics_UnitOfMeasurementId",
@@ -279,11 +275,6 @@ namespace Server.Migrations
                 column: "ResultId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Synonyms_CharacteristicId",
-                table: "Synonyms",
-                column: "CharacteristicId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TypesCharacteristics_CharacteristicId",
                 table: "TypesCharacteristics",
                 column: "CharacteristicId");
@@ -302,9 +293,6 @@ namespace Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "ResultsDevices");
-
-            migrationBuilder.DropTable(
-                name: "Synonyms");
 
             migrationBuilder.DropTable(
                 name: "TypesCharacteristics");

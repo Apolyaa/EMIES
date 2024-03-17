@@ -4,6 +4,6 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public List<SynonymDto> Synonyms { get; set; } = new();
+        public List<string> Synonyms { get; set; } = new();
     }
 }

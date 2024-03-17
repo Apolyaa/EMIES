@@ -33,7 +33,7 @@ namespace Server.Repositories
             _context.Entry(source).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             SourceEntity source = _context.Sources.Find(id);
             if (source != null)

@@ -51,7 +51,9 @@ namespace Client.Pages
                 }
 
                 if (role == 0)
+                {
                     Manager.NavigateTo("/userinterface");
+                }
                 else
                     Manager.NavigateTo("/expertinterface");
 

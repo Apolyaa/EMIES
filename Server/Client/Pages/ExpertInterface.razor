@@ -1,7 +1,10 @@
 ﻿@page "/expertinterface"
-
+@inject NavigationManager Manager
 <h3>ExpertInterface</h3>
 
 <button @onclick="() => GoToCharacteristics()">Страница характеристик</button>
 <button @onclick="() => GoToDevices()">Страница приборов</button>
 <button @onclick="() => GoToTypes()">Страница типов</button>
+<button @onclick="() => GoToUnits()">Страница единиц измерения</button>
+<button @onclick="() => GoToSources()">Страница источников</button>
+<button @onclick="() => GoToProducers()">Страница производителей</button>

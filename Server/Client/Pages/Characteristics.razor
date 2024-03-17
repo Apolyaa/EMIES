@@ -1,4 +1,31 @@
 ﻿@page "/characteristics"
-<h3>Characteristics</h3>
+@using BlazorComponentBus;
 
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+
+<h3>Список характеристик</h3>
+<button @onclick="() => AddCharacteristic()">Добавить характеристику</button>
+<table border="1">
+    <tr>
+        <th>Название характеристики</th>
+        <th>Синонимы</th>
+        <th>Действия</th>
+    </tr>
+    @foreach(var characteristic in _characteristics)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@characteristic.Name" @oninput="(e) => characteristic.Name = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@GetSynonyms(characteristic.Id)" @oninput="(e) => ChangeSynonym(characteristic.Id, e.Value.ToString())"/>
+            </th>
+            <th>
+                <button @onclick="() => UpdateCharacteristic(characteristic)">Изменить</button>
+                <button @onclick="() => DeleteCharacteristic(characteristic)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>
 

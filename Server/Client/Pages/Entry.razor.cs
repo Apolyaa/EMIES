@@ -1,9 +1,5 @@
 ﻿using Client.Contracts;
-using System.Data;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Client.Pages
 {
@@ -42,7 +38,9 @@ namespace Client.Pages
             }
 
             if (result.Data.Role == 0)
+            {
                 Manager.NavigateTo("/userinterface");
+            }                
             else
                 Manager.NavigateTo("/expertinterface");
             _isError = false;

@@ -33,7 +33,7 @@ namespace Server.Repositories
             _context.Entry(unitOfMeasurement).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             UnitOfMeasurementEntity unitOfMeasurement = _context.UnitOfMeasurements.Find(id);
             if (unitOfMeasurement != null)

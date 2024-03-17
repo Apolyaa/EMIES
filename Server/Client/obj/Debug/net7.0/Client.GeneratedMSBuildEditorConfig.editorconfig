@@ -24,6 +24,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/gitlab/EMIES/Server/Client/Pages/AddCharacteristicComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkQ2hhcmFjdGVyaXN0aWNDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/AddCharacteristicInDictionaryComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkQ2hhcmFjdGVyaXN0aWNJbkRpY3Rpb25hcnlDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/gitlab/EMIES/Server/Client/Pages/Characteristics.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcmFjdGVyaXN0aWNzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -44,6 +52,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmF0aW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/gitlab/EMIES/Server/Client/Pages/ResultShowComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzdWx0U2hvd0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/gitlab/EMIES/Server/Client/Pages/UserInterface.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckludGVyZmFjZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -51,7 +63,3 @@ build_metadata.AdditionalFiles.CssScope =
 [D:/gitlab/EMIES/Server/Client/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
-
-[D:/gitlab/EMIES/Server/Client/Pages/AddCharacteristicComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkQ2hhcmFjdGVyaXN0aWNDb21wb25lbnQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-8zxsi13u8u
