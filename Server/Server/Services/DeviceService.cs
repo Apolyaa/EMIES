@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Client.Contracts;
+using Server.EfCore.Model;
 using Server.Repositories;
 using System.Data;
 
@@ -79,5 +80,81 @@ namespace Server.Services
                 return response;
             }
         }
+        public Response<bool> AddDevice(DeviceDto deviceDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var deviceEntity = _mapper.Map<DeviceEntity>(deviceDto);
+                deviceEntity.SourceId = deviceDto.Source.Id;
+                deviceEntity.ProducerId = deviceDto.Producer.Id;
+                deviceEntity.TypeId = deviceDto.Type.Id;
+                _deviceRepository.Insert(deviceEntity);
+                _deviceRepository.Save();
+                //add characteristics
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Add device failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при добавлении прибора.";
+                return response;
+            }
+        }
+        public Response<bool> DeleteDevice(Guid deviceId)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var existDevice = _deviceRepository.GetAll().FirstOrDefault(x => x.Id == deviceId);
+                if (existDevice == null)
+                    throw new Exception($"Not found device by id {deviceId}");
+                _deviceRepository.Delete(deviceId);
+                _deviceRepository.Save();
+                //delete characteristics
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Delete device failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при удалении прибора.";
+                return response;
+            }
+        }
+        public Response<bool> UpdateDevice(DeviceDto deviceDto)
+        {
+            Response<bool> response = new();
+            try
+            {
+                var existDevice = _deviceRepository.GetAll().FirstOrDefault(x => x.Id == deviceDto.Id);
+                if (existDevice is null)
+                    throw new Exception($"Not found device by id {deviceDto.Id}");
+                existDevice.Price = deviceDto.Price;
+                existDevice.SourceId = deviceDto.Source.Id;
+                existDevice.ProducerId = deviceDto.Producer.Id;
+                existDevice.Url = deviceDto.Url;
+                existDevice.TypeId = deviceDto.Type.Id;
+                existDevice.Name = deviceDto.Name;
+                _deviceRepository.Update(existDevice);
+                _deviceRepository.Save();
+                //update characteristics
+                response.Data = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Update device failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при обновлении прибора.";
+                return response;
+            }
+        } 
     }
 }

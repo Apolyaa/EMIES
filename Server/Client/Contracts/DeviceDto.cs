@@ -9,5 +9,6 @@
         public ProducerDto Producer { get; set; }
         public SourceDto Source { get; set; }
         public List<CharacteristicDto> Characteristics { get; set; }
+        public TypeOfDeviceDto Type { get; set; }
     }
 }
