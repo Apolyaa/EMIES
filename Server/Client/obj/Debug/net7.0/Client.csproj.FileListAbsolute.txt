@@ -831,5 +831,3 @@ D:\gitlab\EMIES\Server\Client\bin\Debug\net7.0\BlazorComponentBus.dll
 D:\gitlab\EMIES\Server\Client\bin\Debug\net7.0\Blazored.Modal.dll
 D:\gitlab\EMIES\Server\Client\obj\Debug\net7.0\build-gz\pND7nmqd.gz
 D:\gitlab\EMIES\Server\Client\obj\Debug\net7.0\build-gz\tFW+KiFy.gz
-D:\gitlab\EMIES\Server\Client\obj\Debug\net7.0\scopedcss\Pages\AddCharacteristicComponent.razor.rz.scp.css
-D:\gitlab\EMIES\Server\Client\obj\Debug\net7.0\scopedcss\projectbundle\Client.bundle.scp.css

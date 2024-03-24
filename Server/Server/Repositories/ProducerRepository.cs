@@ -30,7 +30,8 @@ namespace Server.Repositories
 
         public void Update(ProducerEntity producer)
         {
-            _context.Entry(producer).State = EntityState.Modified;
+            Delete(producer.Id);
+            Insert(producer);
         }
 
         public void Delete(Guid id)

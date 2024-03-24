@@ -39,9 +39,9 @@ namespace Server.Controllers
 
             return Ok(result);
         }
-        [HttpDelete("/deleteproducer")]
+        [HttpDelete("/deleteproducer/{producerId}")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteProducer([FromBody] Guid producerId)
+        public async Task<IActionResult> DeleteProducer(Guid producerId)
         {
 
             var result = _producerService.DeleteProducer(producerId);

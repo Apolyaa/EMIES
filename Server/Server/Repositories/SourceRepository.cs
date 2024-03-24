@@ -30,7 +30,8 @@ namespace Server.Repositories
 
         public void Update(SourceEntity source)
         {
-            _context.Entry(source).State = EntityState.Modified;
+            Delete(source.Id);
+            Insert(source);
         }
 
         public void Delete(Guid id)

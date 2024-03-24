@@ -1,0 +1,42 @@
+﻿@page "/types"
+@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
+
+<h3>Типы приборов</h3>
+<button @onclick="() => AddType()">Добавить тип приборов</button>
+<table border="1">
+    <tr>
+        <th>Название типа</th>
+        <th>Основные характеристики</th>
+        <th>Описание</th>
+        <th>Действия</th>
+    </tr>
+    @foreach (var type in _types)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@type.Name" @oninput="(e) => type.Name = e.Value.ToString()" />
+            </th>
+            <th>
+                <button @onclick="() => ChangeMainCharacteristics(type)">Изменение основных характеристик</button>
+            </th>
+            <th>
+                <input type="text" value="@type.Description" @oninput="(e) => type.Description = e.Value.ToString()" />
+            </th>
+            <th>
+                <button @onclick="() => UpdateType(type)">Изменить</button>
+                <button @onclick="() => DeleteType(type)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>

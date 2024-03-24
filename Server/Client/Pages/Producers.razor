@@ -1,0 +1,42 @@
+﻿@page "/producers"
+@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
+
+<h3>Производители</h3>
+<button @onclick="() => AddProducer()">Добавить производителя</button>
+<table border="1">
+    <tr>
+        <th>Название производителя</th>
+        <th>Контакты</th>
+        <th>Описание</th>
+        <th>Действия</th>
+    </tr>
+    @foreach (var producer in _producers)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@producer.Name" @oninput="(e) => producer.Name = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@producer.Contacts" @oninput="(e) => producer.Contacts = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@producer.Description" @oninput="(e) => producer.Description = e.Value.ToString()" />
+            </th>
+            <th>
+                <button @onclick="() => UpdateProducer(producer)">Изменить</button>
+                <button @onclick="() => DeleteProducer(producer)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>

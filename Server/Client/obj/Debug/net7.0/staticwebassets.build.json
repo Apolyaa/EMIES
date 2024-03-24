@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ek6kLHUySo6t8EbuhJHpi6xlUNscOsrQb/Dthcq0r1w=",
+  "Hash": "yTK9uYtThyxF/ItpkRoGH+kmb5W5IZHxqhzSPreT7MY=",
   "Source": "Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -6985,23 +6985,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Client.styles.css"
-    },
-    {
-      "Identity": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Client.bundle.scp.css",
-      "SourceId": "Client",
-      "SourceType": "Computed",
-      "ContentRoot": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
-      "BasePath": "/",
-      "RelativePath": "Client.bundle.scp.css",
-      "AssetKind": "All",
-      "AssetMode": "Reference",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ProjectBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Client.bundle.scp.css"
     },
     {
       "Identity": "D:\\gitlab\\EMIES\\Server\\Client\\wwwroot\\css\\app.css",

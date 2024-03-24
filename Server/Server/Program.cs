@@ -17,6 +17,11 @@ builder.Services.AddScoped<IDictionaryOfCharacteristicService, DictionaryOfChara
 builder.Services.AddScoped<ITypeOfDeviceService, TypeOfDeviceService>();
 builder.Services.AddScoped<IUnitOfMeasurementService, UnitOfMeasurementService>();
 builder.Services.AddScoped<ITypeCharacteristicService, TypeCharacteristicService>();
+builder.Services.AddScoped<ICharacteristicService, CharacteristicService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
+builder.Services.AddScoped<IResultService, ResultService>();
+builder.Services.AddScoped<ISourceService, SourceService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ICharacteristicRepository, CharacteristicRepository>();
 builder.Services.AddTransient<IDeviceRepository, DeviceRepository>();

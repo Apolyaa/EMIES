@@ -3,6 +3,14 @@
 
 @inject HttpClient httpClient
 @inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
 
 <h3>Список характеристик</h3>
 <button @onclick="() => AddCharacteristic()">Добавить характеристику</button>

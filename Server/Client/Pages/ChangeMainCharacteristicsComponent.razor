@@ -1,0 +1,18 @@
+﻿@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+<table border="1">
+    @foreach(var characteristic in _allCharacteristics)
+    {
+        <tr>
+            <th>
+                <input type="checkbox" checked="@_setCharacteristicsId.Contains(characteristic.Id)"
+                @onchange="(e) => SetCharacteristic(bool.Parse(e.Value.ToString()), characteristic)"/>
+            </th>
+            <th>@characteristic.Name</th>
+        </tr>
+    }
+</table>
+<button @onclick="() => SaveCharacteristics()">Сохранить изменения</button>

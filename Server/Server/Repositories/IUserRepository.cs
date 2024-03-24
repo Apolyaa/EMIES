@@ -8,7 +8,7 @@ namespace Server.Repositories
         UserEntity GetById(int id);
         void Insert(UserEntity user);
         void Update(UserEntity user);
-        void Delete(int id);
+        void Delete(Guid id);
         void Save();
     }
 }

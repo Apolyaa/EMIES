@@ -30,10 +30,11 @@ namespace Server.Repositories
 
         public void Update(TypeCharacteristicEntity characteristic)
         {
-            _context.Entry(characteristic).State = EntityState.Modified;
+            Delete(characteristic.Id);
+            Insert(characteristic);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             TypeCharacteristicEntity characteristic = _context.TypesCharacteristics.Find(id);
             if (characteristic != null)

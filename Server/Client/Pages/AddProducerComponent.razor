@@ -1,0 +1,12 @@
+﻿@using BlazorComponentBus;
+
+@inject IComponentBus Bus
+@inject HttpClient httpClient
+
+<p>Введите название производителя</p>
+<input type="text" @oninput="(e) => _producer.Name = e.Value.ToString()" />
+<p>Введите контакты</p>
+<input type="text" @oninput="(e) => _producer.Contacts = e.Value.ToString()" />
+<p>Введите описание</p>
+<input type="text" @oninput="(e) => _producer.Description = e.Value.ToString()" />
+<button @onclick="() => AddProducer()">Добавить производителя</button>

@@ -1,0 +1,43 @@
+﻿@page "/sources"
+@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
+
+<h3>Источники</h3>
+<button @onclick="() => AddSource()">Добавить источник</button>
+<table border="1">
+    <tr>
+        <th>Название источника</th>
+        <th>Ссылка на источник</th>
+        <th>Описание</th>
+        <th>Действия</th>
+    </tr>
+    @foreach (var source in _sources)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@source.Name" @oninput="(e) => source.Name = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@source.Url" @oninput="(e) => source.Url = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@source.Description" @oninput="(e) => source.Description = e.Value.ToString()" />
+            </th>
+            <th>
+                <button @onclick="() => UpdateSource(source)">Изменить</button>
+                <button @onclick="() => DeleteSource(source)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>
+

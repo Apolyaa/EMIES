@@ -30,10 +30,11 @@ namespace Server.Repositories
 
         public void Update(DeviceEntity device)
         {
-            _context.Entry(device).State = EntityState.Modified;
+            Delete(device.Id);
+            Insert(device);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             DeviceEntity device = _context.Devices.Find(id);
             if (device != null)

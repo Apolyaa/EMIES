@@ -40,9 +40,9 @@ namespace Server.Controllers
 
             return Ok(result);
         }
-        [HttpDelete("/deleteunit")]
+        [HttpDelete("/deleteunit/{unitId}")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteUnit([FromBody] Guid unitId)
+        public async Task<IActionResult> DeleteUnit(Guid unitId)
         {
 
             var result = _unitOfMeasurementService.DeleteUnit(unitId);

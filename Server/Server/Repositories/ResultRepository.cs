@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.EfCore.Model;
 using Server.Model;
+using Server.Services;
 
 namespace Server.Repositories
 {
@@ -30,10 +31,11 @@ namespace Server.Repositories
 
         public void Update(ResultEntity result)
         {
-            _context.Entry(result).State = EntityState.Modified;
+            Delete(result.Id);
+            Insert(result);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             ResultEntity result = _context.Results.Find(id);
             if (result != null)

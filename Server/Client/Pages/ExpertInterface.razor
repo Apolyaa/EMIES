@@ -8,3 +8,9 @@
 <button @onclick="() => GoToUnits()">Страница единиц измерения</button>
 <button @onclick="() => GoToSources()">Страница источников</button>
 <button @onclick="() => GoToProducers()">Страница производителей</button>
+@code {
+    protected override void OnInitialized()
+    {
+        Manager.NavigateTo("/characteristics");
+    }
+}

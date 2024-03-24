@@ -30,10 +30,11 @@ namespace Server.Repositories
 
         public void Update(UserEntity user)
         {
-            _context.Entry(user).State = EntityState.Modified;
+            Delete(user.Id);
+            Insert(user);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             UserEntity user = _context.Users.Find(id);
             if (user != null)

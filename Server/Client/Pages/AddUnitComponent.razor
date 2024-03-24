@@ -1,0 +1,10 @@
+﻿@using BlazorComponentBus;
+
+@inject IComponentBus Bus
+@inject HttpClient httpClient
+
+<p>Введите название единицы измерения</p>
+<input type="text" @oninput="(e) => _unit.Name = e.Value.ToString()" />
+<p>Введите коэффициент умножения до системы СИ</p>
+<input type="text" @oninput="(e) => _unit.MultiplicationFactor = double.Parse(e.Value.ToString())" />
+<button @onclick="() => AddUnit()">Добавить единицу измерения</button>

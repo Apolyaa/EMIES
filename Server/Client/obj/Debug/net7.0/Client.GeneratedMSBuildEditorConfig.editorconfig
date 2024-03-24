@@ -32,6 +32,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkQ2hhcmFjdGVyaXN0aWNJbkRpY3Rpb25hcnlDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/gitlab/EMIES/Server/Client/Pages/AddProducerComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkUHJvZHVjZXJDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/AddSourceComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkU291cmNlQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/AddUnitComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkVW5pdENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/ChangeMainCharacteristicsComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhbmdlTWFpbkNoYXJhY3RlcmlzdGljc0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/gitlab/EMIES/Server/Client/Pages/Characteristics.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcmFjdGVyaXN0aWNzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,12 +64,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/gitlab/EMIES/Server/Client/Pages/Producers.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjZXJzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/gitlab/EMIES/Server/Client/Pages/Registration.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmF0aW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/gitlab/EMIES/Server/Client/Pages/ResultShowComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzdWx0U2hvd0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/Sources.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU291cmNlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/Types.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHlwZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/gitlab/EMIES/Server/Client/Pages/Units.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVW5pdHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/gitlab/EMIES/Server/Client/Pages/UserInterface.razor]

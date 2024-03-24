@@ -1,0 +1,38 @@
+﻿@page "/units"
+@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
+
+<h3>Единицы измерения</h3>
+<button @onclick="() => AddUnit()">Добавить единицу измерения</button>
+<table border="1">
+    <tr>
+        <th>Название единицы измерения</th>
+        <th>Коэффициент умножения до системы СИ</th>
+        <th>Действия</th>
+    </tr>
+    @foreach(var unit in _units)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@unit.Name" @oninput="(e) => unit.Name = e.Value.ToString()"/>
+            </th>
+            <th>
+                <input type="text" value="@unit.MultiplicationFactor.ToString()" @oninput="(e) => unit.MultiplicationFactor = double.Parse(e.Value.ToString())" />
+            </th>
+            <th>
+                <button @onclick="() => UpdateUnit(unit)">Изменить</button>
+                <button @onclick="() => DeleteUnit(unit)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>

@@ -30,7 +30,8 @@ namespace Server.Repositories
 
         public void Update(UnitOfMeasurementEntity unitOfMeasurement)
         {
-            _context.Entry(unitOfMeasurement).State = EntityState.Modified;
+            Delete(unitOfMeasurement.Id);
+            Insert(unitOfMeasurement);
         }
 
         public void Delete(Guid id)

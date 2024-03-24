@@ -8,7 +8,7 @@ namespace Server.Repositories
         CharacteristicEntity GetById(int id);
         void Insert(CharacteristicEntity characteristic);
         void Update(CharacteristicEntity characteristic);
-        void Delete(int id);
+        void Delete(Guid id);
         void Save();
     }
 }

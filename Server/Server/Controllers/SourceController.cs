@@ -40,9 +40,9 @@ namespace Server.Controllers
 
             return Ok(result);
         }
-        [HttpDelete("/deletesource")]
+        [HttpDelete("/deletesource/{sourceId}")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> RemoveSource([FromBody] Guid sourceId)
+        public async Task<IActionResult> RemoveSource(Guid sourceId)
         {
 
             var result = _sourceService.DeleteSource(sourceId);

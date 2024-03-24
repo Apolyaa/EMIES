@@ -8,7 +8,7 @@ namespace Server.Repositories
         TypeOfDevicesEntity GetById(int id);
         void Insert(TypeOfDevicesEntity type);
         void Update(TypeOfDevicesEntity type);
-        void Delete(int id);
+        void Delete(Guid id);
         void Save();
     }
 }
