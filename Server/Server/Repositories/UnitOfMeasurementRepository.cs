@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(UnitOfMeasurementEntity unitOfMeasurement)
         {
             Delete(unitOfMeasurement.Id);
+            Save();
             Insert(unitOfMeasurement);
         }
 

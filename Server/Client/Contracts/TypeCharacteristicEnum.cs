@@ -1,11 +1,11 @@
 ﻿namespace Client.Contracts
 {
-    public enum TypeCharacteristicEnum
+    public class TypeCharacteristicConstants
     {
-        Range,
-        Number,
-        String,
-        ArrayOfValues,
-        Boolean
+        public const string RANGE = "Range";
+        public const string NUMBER = "Number";
+        public const string STRING = "String";
+        public const string ARRAYOFVALUES = "ArrayOfValues";
+        public const string BOOLEAN = "Boolean";
     }
 }

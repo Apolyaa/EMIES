@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }    
         public string Value { get; set; }
-        public string UnitOfMeasurement { get; set; }
+        public UnitOfMeasurementDto? UnitOfMeasurement { get; set; }
         public string TypeCharacteristic { get; set; }
         public bool IsEssential { get; set; }
     }

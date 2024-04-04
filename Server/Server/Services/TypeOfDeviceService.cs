@@ -118,5 +118,22 @@ namespace Server.Services
 
             }
         }
+        public Response<TypeOfDeviceDto> GetType(Guid typeId)
+        {
+            Response<TypeOfDeviceDto> response = new();
+            try
+            {
+                response.Data = _mapper.Map<TypeOfDeviceDto>(_typeOfDeviceRepository.GetAll().FirstOrDefault(t => t.Id == typeId));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Get type failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при получении типа.";
+                return response;
+            }
+        }
     }
 }

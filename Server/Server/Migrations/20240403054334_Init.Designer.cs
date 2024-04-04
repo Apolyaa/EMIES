@@ -12,7 +12,7 @@ using Server.Model;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240317112424_Init")]
+    [Migration("20240403054334_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace Server.Migrations
                     b.Property<bool>("BooleanValue")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("CharacteristicId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("DeviceId")
                         .HasColumnType("uuid");
 
@@ -62,13 +65,12 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UnitId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UnitOfMeasurementId")
+                    b.Property<Guid?>("UnitOfMeasurementId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CharacteristicId");
 
                     b.HasIndex("DeviceId");
 
@@ -312,6 +314,12 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.EfCore.Model.CharacteristicEntity", b =>
                 {
+                    b.HasOne("Server.EfCore.Model.DictionaryOfCharacteristicEntity", "Characteristic")
+                        .WithMany()
+                        .HasForeignKey("CharacteristicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.EfCore.Model.DeviceEntity", "Device")
                         .WithMany()
                         .HasForeignKey("DeviceId")
@@ -320,9 +328,9 @@ namespace Server.Migrations
 
                     b.HasOne("Server.EfCore.Model.UnitOfMeasurementEntity", "UnitOfMeasurement")
                         .WithMany()
-                        .HasForeignKey("UnitOfMeasurementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UnitOfMeasurementId");
+
+                    b.Navigation("Characteristic");
 
                     b.Navigation("Device");
 

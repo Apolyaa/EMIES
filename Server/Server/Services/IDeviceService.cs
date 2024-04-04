@@ -8,5 +8,6 @@ namespace Server.Services
         Response<bool> AddDevice(DeviceDto deviceDto);
         Response<bool> DeleteDevice(Guid deviceId);
         Response<bool> UpdateDevice(DeviceDto deviceDto);
+        Response<List<DeviceDto>> GetDevices();
     }
 }

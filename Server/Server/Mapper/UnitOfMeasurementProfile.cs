@@ -8,11 +8,11 @@ namespace Server.Mapper
     {
         public UnitOfMeasurementProfile()
         {
-            CreateMap<UnitOfMeasurementEntity, UnitOfMesurementDto>()
+            CreateMap<UnitOfMeasurementEntity, UnitOfMeasurementDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(d => d.MultiplicationFactor, opt => opt.MapFrom(src => src.MultiplicationFactor));
-            CreateMap<UnitOfMesurementDto, UnitOfMeasurementEntity>()
+            CreateMap<UnitOfMeasurementDto, UnitOfMeasurementEntity>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(d => d.MultiplicationFactor, opt => opt.MapFrom(src => src.MultiplicationFactor));

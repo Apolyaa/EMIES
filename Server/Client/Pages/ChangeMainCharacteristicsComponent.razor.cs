@@ -1,15 +1,12 @@
 ﻿using Client.Contracts;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Net.Http;
-using System;
-using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
+using System.Net.Http.Json;
 
 namespace Client.Pages
 {
     public partial class ChangeMainCharacteristicsComponent
     {
-        [ParameterAttribute]
+        [Parameter]
         public List<DictionaryOfCharacteristicDto> Characteristics { get; set; }
         public HashSet<Guid> _setCharacteristicsId = new();
         public List<DictionaryOfCharacteristicDto> _allCharacteristics = new();

@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(TypeOfDevicesEntity type)
         {
             Delete(type.Id);
+            Save();
             Insert(type);
         }
 

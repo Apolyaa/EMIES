@@ -1,0 +1,59 @@
+﻿@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+<table border="1">
+    <caption>Таблица характеристик</caption>
+    <tr>
+        <th>Название</th>
+        <th>Тип значения</th>
+        <th>Значение</th>
+        <th>Единица измерения</th>
+        <th>Действия</th>
+    </tr>
+    @if (_characteristics.Any())
+    {
+        @foreach (var characteristic in _characteristics)
+        {
+            <tr>
+                <th>
+                    <input value="@characteristic.Name" @onchange="(e) => {characteristic.DictionaryOfCharacteristic = _dictionaryOfCharacteristics.FirstOrDefault(t => t.Name == e.Value.ToString()); characteristic.Name = e.Value.ToString();}" type="text" name="characteristics" list="characteristicsname">
+                    <datalist id="characteristicsname">
+                        @foreach (var dictionary in _dictionaryOfCharacteristics)
+                        {
+                            <option>@dictionary.Name</option>
+                        }
+                    </datalist>
+                </th>
+                <th>
+                    <input value="@_typesCharacteristic.FirstOrDefault(t => t.Value == characteristic.Type).Key" @onchange="(e) => characteristic.Type = _typesCharacteristic.GetValueOrDefault(e.Value.ToString())" type="text" name="typeschar" list="typescharname">
+                    <datalist id="typescharname">
+                        @foreach (var type in _typesCharacteristic.Keys)
+                        {
+                            <option>@type</option>
+                        }
+                    </datalist>
+                </th>
+                <th>
+                    <input value="@characteristic.Value" @oninput="(e) => characteristic.Value = e.Value.ToString()" type="text" />
+                </th>
+                <th>
+                    <input value="@characteristic.Unit.Name" @onchange="(e) => characteristic.Unit = _units.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="units" list="unitsname">
+                    <datalist id="unitsname">
+                        @foreach (var unit in _units)
+                        {
+                            <option>@unit.Name</option>
+                        }
+                    </datalist>
+                </th>
+                <th>
+                    <button @onclick="() => _characteristics.Remove(characteristic)">Удалить</button>
+                </th>
+            </tr>
+        }
+    }
+
+</table>
+<button @onclick="() => AddCharacteristic()">Добавить характеристику</button>
+<button @onclick="() => SaveCharacteristics()">Сохранить характеристики</button>

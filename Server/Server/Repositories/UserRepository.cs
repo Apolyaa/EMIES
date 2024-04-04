@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(UserEntity user)
         {
             Delete(user.Id);
+            Save();
             Insert(user);
         }
 

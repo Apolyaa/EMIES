@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(SourceEntity source)
         {
             Delete(source.Id);
+            Save();
             Insert(source);
         }
 

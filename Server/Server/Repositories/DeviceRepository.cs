@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(DeviceEntity device)
         {
             Delete(device.Id);
+            Save();
             Insert(device);
         }
 

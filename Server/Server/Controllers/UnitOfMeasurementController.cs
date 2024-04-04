@@ -14,7 +14,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("/getunits")]
-        [ProducesResponseType(typeof(Response<List<UnitOfMesurementDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<List<UnitOfMeasurementDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUnitsOfMeasurement()
         {
 
@@ -24,7 +24,7 @@ namespace Server.Controllers
         }
         [HttpPut("/addunit")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddUnit([FromBody] UnitOfMesurementDto unitOfMesurementDto)
+        public async Task<IActionResult> AddUnit([FromBody] UnitOfMeasurementDto unitOfMesurementDto)
         {
 
             var result = _unitOfMeasurementService.AddUnit(unitOfMesurementDto);
@@ -33,7 +33,7 @@ namespace Server.Controllers
         }
         [HttpPost("/updateunit")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateUnit([FromBody] UnitOfMesurementDto unitOfMesurementDto)
+        public async Task<IActionResult> UpdateUnit([FromBody] UnitOfMeasurementDto unitOfMesurementDto)
         {
 
             var result = _unitOfMeasurementService.UpdateUnit(unitOfMesurementDto);

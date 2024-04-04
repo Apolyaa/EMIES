@@ -16,16 +16,16 @@ namespace Server.Services
             _mapper = mapper;
         }
 
-        public Response<List<UnitOfMesurementDto>> GetUnitsOfMeasurement()
+        public Response<List<UnitOfMeasurementDto>> GetUnitsOfMeasurement()
         {
-            Response<List<UnitOfMesurementDto>> response = new();
+            Response<List<UnitOfMeasurementDto>> response = new();
             response.Data = new();
             try
             {
                 var units = _unitOfMeasurementRepository.GetAll();
                 foreach (var unit in units)
                 {
-                   response.Data.Add(_mapper.Map<UnitOfMesurementDto>(unit));
+                   response.Data.Add(_mapper.Map<UnitOfMeasurementDto>(unit));
                 }
                 return response;
             }
@@ -38,13 +38,13 @@ namespace Server.Services
                 return response;
             }
         }
-        public Response<UnitOfMesurementDto> GetUnitByName(string name)
+        public Response<UnitOfMeasurementDto> GetUnitByName(string name)
         {
-            Response<UnitOfMesurementDto> response = new();
+            Response<UnitOfMeasurementDto> response = new();
             try
             {
                 var unit = _unitOfMeasurementRepository.GetAll().FirstOrDefault(u => u.Name == name);
-                response.Data = _mapper.Map<UnitOfMesurementDto>(unit);
+                response.Data = _mapper.Map<UnitOfMeasurementDto>(unit);
                 return response;
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace Server.Services
                 return response;
             }
         }
-        public Response<bool> AddUnit(UnitOfMesurementDto unitOfMesurementDto)
+        public Response<bool> AddUnit(UnitOfMeasurementDto unitOfMesurementDto)
         {
             Response<bool> response = new();
             try
@@ -96,7 +96,7 @@ namespace Server.Services
                 return response;
             }
         }
-        public Response<bool> UpdateUnit(UnitOfMesurementDto unitOfMesurementDto)
+        public Response<bool> UpdateUnit(UnitOfMeasurementDto unitOfMesurementDto)
         {
             Response<bool> response = new();
             try

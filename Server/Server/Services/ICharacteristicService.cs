@@ -7,8 +7,9 @@ namespace Server.Services
     {
         Response<List<CharacteristicEntity>> GetCharacteristicsByDeviceId(Guid deviceId);
         Response<ResultCompareCharacteristicsDto> CompareCharacteristicsOfDevice(Guid deviceId, List<CharacteristicForFindDto> characteristicForFinds);
-        //Response<bool> AddCharacteristic(CharacteristicDto characteristicDto);
-        //Response<bool> DeleteCharacteristic(Guid characteristicId);
-        //Response<bool> UpdateCharacteristic(CharacteristicDto characteristicDto);
+        Response<bool> AddCharacteristics(List<CharacteristicDto> characteristicDtos, Guid deviceId);
+        Response<bool> DeleteCharacteristics(Guid deviceId);
+        Response<bool> UpdateCharacteristics(List<CharacteristicDto> characteristicDtos, Guid deviceId);
+        Response<List<CharacteristicDto>> GetCharacteristics(Guid deviceId);
     }
 }

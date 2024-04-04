@@ -185,9 +185,9 @@ namespace Server.Migrations
                     ArrayOfValues = table.Column<string[]>(type: "text[]", nullable: false),
                     BooleanValue = table.Column<bool>(type: "boolean", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
-                    UnitId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UnitOfMeasurementId = table.Column<Guid>(type: "uuid", nullable: true),
                     DeviceId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UnitOfMeasurementId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CharacteristicId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,11 +199,16 @@ namespace Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Characteristics_DictionaryOfCharacteristics_CharacteristicId",
+                        column: x => x.CharacteristicId,
+                        principalTable: "DictionaryOfCharacteristics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Characteristics_UnitOfMeasurements_UnitOfMeasurementId",
                         column: x => x.UnitOfMeasurementId,
                         principalTable: "UnitOfMeasurements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -233,6 +238,11 @@ namespace Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Characteristics_CharacteristicId",
+                table: "Characteristics",
+                column: "CharacteristicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characteristics_DeviceId",

@@ -12,15 +12,17 @@ namespace Server.Services
         private readonly ICharacteristicService _characteristicService;
         private readonly ISourceService _sourceService;
         private readonly IProducerService _producerService;
+        private readonly ITypeOfDeviceService _typeOfDeviceService;
         private readonly IMapper _mapper;
         public DeviceService(IDeviceRepository deviceRepository, ICharacteristicService characteristicService,
-            ISourceService sourceService, IProducerService producerService, IMapper mapper)
+            ISourceService sourceService, IProducerService producerService, IMapper mapper, ITypeOfDeviceService typeOfDeviceService)
         {
             _deviceRepository = deviceRepository;
             _characteristicService = characteristicService;
             _sourceService = sourceService;
             _producerService = producerService;
             _mapper = mapper;
+            _typeOfDeviceService = typeOfDeviceService;
         }
         public Response<ResultDto> GetSuitableDevices(Guid typeId, List<CharacteristicForFindDto> characteristicForFinds)
         {
@@ -91,7 +93,10 @@ namespace Server.Services
                 deviceEntity.TypeId = deviceDto.Type.Id;
                 _deviceRepository.Insert(deviceEntity);
                 _deviceRepository.Save();
-                //add characteristics
+                var responseCharacteristic = _characteristicService.AddCharacteristics(deviceDto.Characteristics, 
+                    deviceDto.Id);
+                if (!responseCharacteristic.Success)
+                    throw new Exception(responseCharacteristic.Message);
                 response.Data = true;
                 return response;
             }
@@ -114,7 +119,9 @@ namespace Server.Services
                     throw new Exception($"Not found device by id {deviceId}");
                 _deviceRepository.Delete(deviceId);
                 _deviceRepository.Save();
-                //delete characteristics
+                var responseCharacteristic = _characteristicService.DeleteCharacteristics(deviceId);
+                if (!responseCharacteristic.Success)
+                    throw new Exception(responseCharacteristic.Message);
                 response.Data = true;
                 return response;
             }
@@ -143,7 +150,10 @@ namespace Server.Services
                 existDevice.Name = deviceDto.Name;
                 _deviceRepository.Update(existDevice);
                 _deviceRepository.Save();
-                //update characteristics
+                var responseCharacteristic = _characteristicService.UpdateCharacteristics(deviceDto.Characteristics,
+                    deviceDto.Id);
+                if (!responseCharacteristic.Success)
+                    throw new Exception(responseCharacteristic.Message);
                 response.Data = true;
                 return response;
             }
@@ -156,5 +166,48 @@ namespace Server.Services
                 return response;
             }
         } 
+        public Response<List<DeviceDto>> GetDevices()
+        {
+            Response<List<DeviceDto>> response = new();
+            response.Data = new();
+            try
+            {
+                var deviceEntities = _deviceRepository.GetAll();
+                foreach (var deviceEntity in deviceEntities)
+                {
+                    var deviceDto = _mapper.Map<DeviceDto>(deviceEntity);
+                    var responseProducer = _producerService.GetProducerById(deviceEntity.ProducerId);
+                    if (!responseProducer.Success)
+                        throw new Exception(responseProducer.Message);
+                    deviceDto.Producer = responseProducer.Data;
+
+                    var responseSource = _sourceService.GetSourceById(deviceEntity.SourceId);
+                    if (!responseSource.Success)
+                        throw new Exception(responseSource.Message);
+                    deviceDto.Source = responseSource.Data;
+
+                    var responseCharacteristics = _characteristicService.GetCharacteristics(deviceEntity.Id);
+                    if (!responseCharacteristics.Success)
+                        throw new Exception(responseCharacteristics.Message);
+                    deviceDto.Characteristics = responseCharacteristics.Data;
+
+                    var responseType = _typeOfDeviceService.GetType(deviceEntity.TypeId);
+                    if (!responseType.Success)
+                        throw new Exception(responseType.Message);
+                    deviceDto.Type = responseType.Data;
+
+                    response.Data.Add(deviceDto);
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Get devices failed.");
+                Console.WriteLine(ex.ToString());
+                response.Success = false;
+                response.Message = "Ошибка при получении приборов.";
+                return response;
+            }
+        }
     }
 }

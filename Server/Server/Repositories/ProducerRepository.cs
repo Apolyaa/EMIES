@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(ProducerEntity producer)
         {
             Delete(producer.Id);
+            Save();
             Insert(producer);
         }
 

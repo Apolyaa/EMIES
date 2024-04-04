@@ -32,6 +32,7 @@ namespace Server.Repositories
         public void Update(ResultEntity result)
         {
             Delete(result.Id);
+            Save();
             Insert(result);
         }
 

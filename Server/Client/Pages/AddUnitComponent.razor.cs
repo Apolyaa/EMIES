@@ -5,7 +5,7 @@ namespace Client.Pages
 {
     public partial class AddUnitComponent
     {
-        public UnitOfMesurementDto _unit = new();
+        public UnitOfMeasurementDto _unit = new();
         public async Task AddUnit()
         {
             _unit.Id = Guid.NewGuid();

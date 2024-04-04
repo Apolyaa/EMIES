@@ -9,20 +9,20 @@ namespace Client.Pages
 {
     public partial class Units
     {
-        public List<UnitOfMesurementDto> _units = new();
+        public List<UnitOfMeasurementDto> _units = new();
         public string? _error;
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _addUnit;
         protected override async Task OnParametersSetAsync()
         {
             var response = await httpClient.GetAsync("http://localhost:5102/getunits");
-            var result = await response.Content.ReadFromJsonAsync<Response<List<UnitOfMesurementDto>>>();
+            var result = await response.Content.ReadFromJsonAsync<Response<List<UnitOfMeasurementDto>>>();
             if (result is not null && result.Success)
                 _units = result.Data!;
             else
                 _error = result.Message!;
 
-            Bus.Subscribe<UnitOfMesurementDto>(AddUnitInTable);
+            Bus.Subscribe<UnitOfMeasurementDto>(AddUnitInTable);
         }
         public void AddUnit()
         {
@@ -32,13 +32,13 @@ namespace Client.Pages
         {
             if (message is null)
                 return;
-            var response = message.GetMessage<UnitOfMesurementDto>();
+            var response = message.GetMessage<UnitOfMeasurementDto>();
             _units.Add(response);
 
             _addUnit.Close();
             StateHasChanged();
         }
-        public async Task DeleteUnit(UnitOfMesurementDto unitOfMesurementDto)
+        public async Task DeleteUnit(UnitOfMeasurementDto unitOfMesurementDto)
         {
             var response = await httpClient.DeleteAsync($"http://localhost:5102/deleteunit/{unitOfMesurementDto.Id}");
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
@@ -49,7 +49,7 @@ namespace Client.Pages
             else
                 _error = result.Message!;
         }
-        public async Task UpdateUnit(UnitOfMesurementDto unitOfMesurementDto)
+        public async Task UpdateUnit(UnitOfMeasurementDto unitOfMesurementDto)
         {
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updateunit", unitOfMesurementDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();

@@ -31,6 +31,7 @@ namespace Server.Repositories
         public void Update(CharacteristicEntity characteristic)
         {
             Delete(characteristic.Id);
+            Save();
             Insert(characteristic);
         }
 

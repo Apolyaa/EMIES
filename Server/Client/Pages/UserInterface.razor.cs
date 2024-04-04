@@ -3,16 +3,14 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Client.Contracts;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using System.Net.Http.Json;
-using System.Reflection.PortableExecutable;
 
 namespace Client.Pages
 {
     public partial class UserInterface
     {
         public List<TypeOfDeviceDto> _types = new();
-        public List<UnitOfMesurementDto> _unitOfMesurements = new();
+        public List<UnitOfMeasurementDto> _unitOfMesurements = new();
         public List<DictionaryOfCharacteristicDto> _mainCharacteristics = new();
         public Dictionary<Guid, CharacteristicForFindDto> _sourceCharacteristics = new();
         public Dictionary<string, string> _typeCharacteristic = new()
@@ -40,7 +38,7 @@ namespace Client.Pages
             else
                 _error = result.Message!;
             var responseUnits = await httpClient.GetAsync("http://localhost:5102/getunits");
-            var resultUnits = await responseUnits.Content.ReadFromJsonAsync<Response<List<UnitOfMesurementDto>>>();
+            var resultUnits = await responseUnits.Content.ReadFromJsonAsync<Response<List<UnitOfMeasurementDto>>>();
             if (resultUnits is not null && resultUnits.Success)
                 _unitOfMesurements = resultUnits.Data!;
             else
@@ -97,7 +95,7 @@ namespace Client.Pages
                 _sourceCharacteristics.Add(characteristicDto.Id, characteristic);
             }
         }
-        public void AddCharacteristicUnit(Guid id, string unit)
+        public void AddCharacteristicUnit(Guid id, UnitOfMeasurementDto unit)
         {
             if (_sourceCharacteristics.TryGetValue(id, out var characteristic))
             {
@@ -134,11 +132,6 @@ namespace Client.Pages
             var parameters = new ModalParameters().Add(nameof(ResultShowComponent.Result), _result);
             _resultShow = Modal.Show<ResultShowComponent>("Результат подбора оборудования", parameters);
 
-        }
-        private async ValueTask DisposeAsync()
-        {
-            Bus.UnSubscribe<DictionaryOfCharacteristicDto>(AddCharacteristicInTable);
-            await Task.CompletedTask;
         }
     }
 }

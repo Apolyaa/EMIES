@@ -1,0 +1,76 @@
+﻿@page "/devices"
+@using BlazorComponentBus;
+
+@inject HttpClient httpClient
+@inject IComponentBus Bus
+@inject NavigationManager Manager
+
+<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
+<a @onclick="() => GoToDevices()">Страница приборов</a>
+<a @onclick="() => GoToTypes()">Страница типов</a>
+<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
+<a @onclick="() => GoToSources()">Страница источников</a>
+<a @onclick="() => GoToProducers()">Страница производителей</a>
+
+<h3>Измерительные приборы</h3>
+<button @onclick="() => AddDevice()">Добавить прибор</button>
+<table border="1">
+    <tr>
+        <th>Название прибора</th>
+        <th>Цена</th>
+        <th>Ссылка на источник</th>
+        <th>Производитель</th>
+        <th>Источник</th>
+        <th>Тип прибора</th>
+        <th>Характеристики</th>
+        <th>Действия</th>
+    </tr>
+    @foreach (var device in _devices)
+    {
+        <tr>
+            <th>
+                <input type="text" value="@device.Name" @oninput="(e) => device.Name = e.Value.ToString()" />
+            </th>
+            <th>
+                <input type="text" value="@device.Price.ToString()" @oninput="(e) => device.Price = double.Parse(e.Value.ToString())" />
+            </th>
+            <th>
+                <input type="text" value="@device.Url" @oninput="(e) => device.Url = e.Value.ToString()" />
+            </th>
+            <th>
+                <input value="@GetProducerName(device)" @onchange="(e) => device.Producer = _producers.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="producers" list="producersname">
+                <datalist id="producersname">
+                    @foreach (var producer in _producers)
+                    {
+                        <option>@producer.Name</option>
+                    }
+                </datalist>
+            </th>
+            <th>
+                <input value="@GetSourceName(device)" @onchange="(e) => device.Source = _sources.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="sources" list="sourcesname">
+                <datalist id="sourcesname">
+                    @foreach (var source in _sources)
+                    {
+                        <option>@source.Name</option>
+                    }
+                </datalist>
+            </th>
+            <th>
+                <input value="@GetTypeName(device)" @onchange="(e) => device.Type = _types.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="types" list="typesname">
+                <datalist id="typesname">
+                    @foreach (var type in _types)
+                    {
+                        <option>@type.Name</option>
+                    }
+                </datalist>
+            </th>
+            <th>
+                <button @onclick="() => ChangeCharacteristics(device)">Изменить характеристики</button>
+            </th>
+            <th>
+                <button @onclick="() => UpdateDevice(device)">Изменить</button>
+                <button @onclick="() => DeleteDevice(device)">Удалить</button>
+            </th>
+        </tr>
+    }
+</table>
