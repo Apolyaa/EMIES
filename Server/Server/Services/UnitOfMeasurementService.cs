@@ -61,6 +61,14 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existUnit = _unitOfMeasurementRepository.GetAll().
+                    FirstOrDefault(u => u.Name.ToLower() == unitOfMesurementDto.Name.ToLower());
+                if (existUnit is not null)
+                {
+                    response.Message = "Единица измерения с таким названием уже существует";
+                    throw new Exception("Unit is already exists.");
+                }  
+
                 var producerEntity = _mapper.Map<UnitOfMeasurementEntity>(unitOfMesurementDto);
 
                 _unitOfMeasurementRepository.Insert(producerEntity);
@@ -73,7 +81,8 @@ namespace Server.Services
                 Console.WriteLine("Add unit failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при добавлении единицы измерения.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при добавлении единицы измерения.";
                 return response;
             }
         }
@@ -101,6 +110,15 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existUnit = _unitOfMeasurementRepository.GetAll().
+                    FirstOrDefault(u => u.Name.ToLower() == unitOfMesurementDto.Name.ToLower() &&
+                    u.Id != unitOfMesurementDto.Id);
+                if (existUnit is not null)
+                {
+                    response.Message = "Единица измерения с таким названием уже существует";
+                    throw new Exception("Unit is already exists.");
+                }
+
                 var unitEntity = _mapper.Map<UnitOfMeasurementEntity>(unitOfMesurementDto);
                 _unitOfMeasurementRepository.Update(unitEntity);
                 _unitOfMeasurementRepository.Save();
@@ -112,7 +130,8 @@ namespace Server.Services
                 Console.WriteLine("Update unit failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при изменении единицы измерения.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при изменении единицы измерения.";
                 return response;
             }
         }

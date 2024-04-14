@@ -79,6 +79,14 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existCharacteristic = _dictionaryOfCharacteristicRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == dictionaryOfCharacteristicDto.Name.ToLower());
+                if (existCharacteristic is not null)
+                {
+                    response.Message = "Характеристика с таким названием уже существует.";
+                    throw new Exception("Characteristic is already exist");
+                }
+
                 var dictionaryOfCharacteristicEntity = _mapper.Map<DictionaryOfCharacteristicEntity>(dictionaryOfCharacteristicDto);
                 dictionaryOfCharacteristicEntity.Synonyms = dictionaryOfCharacteristicDto.Synonyms.ToArray();
 
@@ -92,7 +100,8 @@ namespace Server.Services
                 Console.WriteLine("Add characteristic failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при добавлении характеристики.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при добавлении характеристики.";
                 return response;
             }
         }
@@ -120,6 +129,15 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existCharacteristic = _dictionaryOfCharacteristicRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == dictionaryOfCharacteristicDto.Name.ToLower() &&
+                    s.Id != dictionaryOfCharacteristicDto.Id);
+                if (existCharacteristic is not null)
+                {
+                    response.Message = "Характеристика с таким названием уже существует.";
+                    throw new Exception("Characteristic is already exist");
+                }
+
                 var dictionaryOfCharacteristicEntity = _mapper.Map<DictionaryOfCharacteristicEntity>(dictionaryOfCharacteristicDto);
                 dictionaryOfCharacteristicEntity.Synonyms = dictionaryOfCharacteristicDto.Synonyms.ToArray();
                 _dictionaryOfCharacteristicRepository.Update(dictionaryOfCharacteristicEntity);
@@ -132,7 +150,8 @@ namespace Server.Services
                 Console.WriteLine("Update characteristic failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при изменении характеристики.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при изменении характеристики.";
                 return response;
             }
         }

@@ -25,13 +25,13 @@
     {
         <tr>
             <th>
-                <input type="text" value="@producer.Name" @oninput="(e) => producer.Name = e.Value.ToString()" />
+                <input type="text" value="@producer.Name" @oninput="(e) => producer.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@producer.Contacts" @oninput="(e) => producer.Contacts = e.Value.ToString()" />
+                <input type="text" value="@producer.Contacts" @oninput="(e) => producer.Contacts = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@producer.Description" @oninput="(e) => producer.Description = e.Value.ToString()" />
+                <input type="text" value="@producer.Description" @oninput="(e) => producer.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <button @onclick="() => UpdateProducer(producer)">Изменить</button>

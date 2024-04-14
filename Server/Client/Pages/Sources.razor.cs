@@ -10,7 +10,6 @@ namespace Client.Pages
     public partial class Sources
     {
         public List<SourceDto> _sources = new();
-        public string? _error;
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _addSource;
         protected override async Task OnParametersSetAsync()
@@ -20,7 +19,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _sources = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
 
             Bus.Subscribe<SourceDto>(AddSourceInTable);
         }
@@ -45,14 +44,14 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _sources.Remove(sourceDto);
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task UpdateSource(SourceDto sourceDto)
         {
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updatesource", sourceDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public void GoToCharacteristics()
         {
@@ -79,6 +78,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

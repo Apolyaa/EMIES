@@ -29,13 +29,13 @@
     {
         <tr>
             <th>
-                <input type="text" value="@device.Name" @oninput="(e) => device.Name = e.Value.ToString()" />
+                <input type="text" value="@device.Name" @oninput="(e) => device.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@device.Price.ToString()" @oninput="(e) => device.Price = double.Parse(e.Value.ToString())" />
+                <input type="text" value="@device.Price.ToString()" @oninput="(e) => device.Price = double.TryParse(e.Value.ToString(), out var value) ? value : 0" />
             </th>
             <th>
-                <input type="text" value="@device.Url" @oninput="(e) => device.Url = e.Value.ToString()" />
+                <input type="text" value="@device.Url" @oninput="(e) => device.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <input value="@GetProducerName(device)" @onchange="(e) => device.Producer = _producers.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="producers" list="producersname">

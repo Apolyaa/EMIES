@@ -25,13 +25,13 @@
     {
         <tr>
             <th>
-                <input type="text" value="@source.Name" @oninput="(e) => source.Name = e.Value.ToString()" />
+                <input type="text" value="@source.Name" @oninput="(e) => source.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@source.Url" @oninput="(e) => source.Url = e.Value.ToString()" />
+                <input type="text" value="@source.Url" @oninput="(e) => source.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@source.Description" @oninput="(e) => source.Description = e.Value.ToString()" />
+                <input type="text" value="@source.Description" @oninput="(e) => source.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <button @onclick="() => UpdateSource(source)">Изменить</button>

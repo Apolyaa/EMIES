@@ -4,6 +4,7 @@ using Client.Contracts;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using BlazorComponentBus;
+using System.Text;
 
 namespace Client.Pages
 {
@@ -13,7 +14,6 @@ namespace Client.Pages
         public List<SourceDto> _sources = new();
         public List<TypeOfDeviceDto> _types = new();
         public List<ProducerDto> _producers = new();
-        public string? _error;
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _addCharacteristics;
         protected override async Task OnInitializedAsync()
@@ -23,7 +23,7 @@ namespace Client.Pages
             if (resultProducer is not null && resultProducer.Success)
                 _producers = resultProducer.Data!;
             else
-                _error = resultProducer.Message!;
+                ShowError(resultProducer.Message);
 
 
             var responseSource = await httpClient.GetAsync("http://localhost:5102/getsources");
@@ -31,25 +31,53 @@ namespace Client.Pages
             if (resultSource is not null && resultSource.Success)
                 _sources = resultSource.Data!;
             else
-                _error = resultSource.Message!;
+                ShowError(resultSource.Message);
 
             var responseType = await httpClient.GetAsync("http://localhost:5102/gettypes");
             var resultType = await responseType.Content.ReadFromJsonAsync<Response<List<TypeOfDeviceDto>>>();
             if (resultType is not null && resultType.Success)
                 _types = resultType.Data!;
             else
-                _error = resultType.Message!;
+                ShowError(resultType.Message);
             Bus.Subscribe<AddCharacteristicEvent>(AddCharacteristicsOfDevice);
         }
         public async Task AddDevice()
         {
+            StringBuilder stringBuilder = new();
+            if (_addDevice.Type is null)
+                stringBuilder.Append("Укажите тип прибора. ");
+            if (_addDevice.Source is null)
+                stringBuilder.Append("Укажите источник прибора. ");
+            if (_addDevice.Producer is null)
+                stringBuilder.Append("Укажите производителя прибора. ");
+            if (_addDevice.Characteristics is null || !_addDevice.Characteristics.Any())
+                stringBuilder.Append("Укажите характеристики прибора. ");
+            var message = stringBuilder.ToString();
+            if (!string.IsNullOrEmpty(message))
+            {
+                ShowError(message);
+                return;
+            }
+            
             _addDevice.Id = Guid.NewGuid();
             var response = await httpClient.PutAsJsonAsync($"http://localhost:5102/adddevice", _addDevice);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
+            if (!result.Success)
+            {
+                ShowError(result.Message);
+                return;
+            }
+                
             await Bus.Publish(_addDevice);
         }
         public void AddCharacteristics()
         {
+            if (_addDevice.Type is null)
+            {
+                ShowError("Укажите тип прибора.");
+                return;
+            }
+
             bool addMode;
             string? title;
             if (_addDevice.Characteristics is not null && _addDevice.Characteristics.Any())
@@ -83,6 +111,10 @@ namespace Client.Pages
             _addDevice.Characteristics = response.Characteristics;
             _addCharacteristics.Close();
             StateHasChanged();
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

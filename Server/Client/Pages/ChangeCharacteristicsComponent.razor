@@ -18,7 +18,7 @@
         {
             <tr>
                 <th>
-                    <input value="@characteristic.Name" @onchange="(e) => {characteristic.DictionaryOfCharacteristic = _dictionaryOfCharacteristics.FirstOrDefault(t => t.Name == e.Value.ToString()); characteristic.Name = e.Value.ToString();}" type="text" name="characteristics" list="characteristicsname">
+                    <input value="@characteristic.Name" @onchange="(e) => {characteristic.DictionaryOfCharacteristic = _dictionaryOfCharacteristics.FirstOrDefault(t => t.Name == e.Value.ToString()); characteristic.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString();}" type="text" name="characteristics" list="characteristicsname">
                     <datalist id="characteristicsname">
                         @foreach (var dictionary in _dictionaryOfCharacteristics)
                         {
@@ -36,7 +36,7 @@
                     </datalist>
                 </th>
                 <th>
-                    <input value="@characteristic.Value" @oninput="(e) => characteristic.Value = e.Value.ToString()" type="text" />
+                    <input value="@characteristic.Value" @oninput="(e) => characteristic.Value = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" type="text" />
                 </th>
                 <th>
                     <input value="@characteristic.Unit.Name" @onchange="(e) => characteristic.Unit = _units.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="units" list="unitsname">

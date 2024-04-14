@@ -65,7 +65,7 @@ namespace Server.Services
                         response.Data.CountNotFoundCharacteristics++;
                         continue;
                     }
-                    if (characteristicForCompare.Type == "Boolean")
+                    if (characteristicForCompare.Type == TypeCharacteristicConstants.BOOLEAN)
                     {
                         var value = characteristicFind.Value.ToLower() == "да" ? true : false;
                         var characteristicDto = new CharacteristicDto()
@@ -74,7 +74,8 @@ namespace Server.Services
                             Name = characteristicForCompare.Name,
                             Value = characteristicForCompare.BooleanValue ? "Да" : "Нет",
                             IsEssential = characteristicFind.IsEssential,
-                            Type = characteristicForCompare.Type
+                            Type = characteristicForCompare.Type,
+                            Unit = characteristicFind.UnitOfMeasurement
                         };
                         if (value == characteristicForCompare.BooleanValue)
                         {
@@ -90,7 +91,7 @@ namespace Server.Services
                         response.Data.Characteristics.Add(characteristicDto);
                         continue;
                     }
-                    if (characteristicForCompare.Type == "ArrayOfValues")
+                    if (characteristicForCompare.Type == TypeCharacteristicConstants.ARRAYOFVALUES)
                     {
                         StringBuilder stringBuilder = new();
                         foreach (var characteristic in characteristicForCompare.ArrayOfValues)
@@ -101,9 +102,10 @@ namespace Server.Services
                             Name = characteristicForCompare.Name,
                             Value = stringBuilder.ToString().TrimEnd(' ').TrimEnd(','),
                             IsEssential = characteristicFind.IsEssential,
-                            Type = characteristicForCompare.Type
+                            Type = characteristicForCompare.Type,
+                            Unit = characteristicFind.UnitOfMeasurement
                         };
-                        if (characteristicFind.TypeCharacteristic == "String")
+                        if (characteristicFind.TypeCharacteristic == TypeCharacteristicConstants.STRING)
                         {
                             var value = characteristicForCompare.ArrayOfValues.FirstOrDefault(c => c == characteristicFind.Value);
 
@@ -121,7 +123,7 @@ namespace Server.Services
                             response.Data.Characteristics.Add(characteristicDto);
                             continue;
                         }
-                        if (characteristicFind.TypeCharacteristic == "ArrayOfValues")
+                        if (characteristicFind.TypeCharacteristic == TypeCharacteristicConstants.ARRAYOFVALUES)
                         {
                             var values = characteristicFind.Value.Split(',');
                             var valuesCompare = characteristicForCompare.ArrayOfValues.ToHashSet();
@@ -139,13 +141,14 @@ namespace Server.Services
                                     response.Data.CountSuitableUnessential++;
                                 characteristicDto.IsMatch = true;
                                 response.Data.Characteristics.Add(characteristicDto);
+                                continue;
                             }
                             characteristicDto.IsMatch = false;
                             response.Data.Characteristics.Add(characteristicDto);
                             continue;
                         }
                     }
-                    if (characteristicForCompare.Type == "String")
+                    if (characteristicForCompare.Type == TypeCharacteristicConstants.STRING)
                     {
                         var characteristicDto = new CharacteristicDto()
                         {
@@ -153,9 +156,10 @@ namespace Server.Services
                             Name = characteristicForCompare.Name,
                             Value = characteristicForCompare.StringValue,
                             IsEssential = characteristicFind.IsEssential,
-                            Type = characteristicForCompare.Type
+                            Type = characteristicForCompare.Type,
+                            Unit = characteristicFind.UnitOfMeasurement
                         };
-                        if (characteristicFind.Value == characteristicForCompare.StringValue)
+                        if (characteristicFind.Value.ToLower() == characteristicForCompare.StringValue.ToLower())
                         {
                             if (characteristicFind.IsEssential)
                                 response.Data.CountSuitableEssential++;
@@ -169,19 +173,35 @@ namespace Server.Services
                         response.Data.Characteristics.Add(characteristicDto);
                         continue;
                     }
-                    if (characteristicForCompare.Type == "Number")
+                    if (characteristicForCompare.Type == TypeCharacteristicConstants.NUMBER)
                     {
-                            if (GetValueInCI(double.Parse(characteristicFind.Value), 
+                        var characteristicDto = new CharacteristicDto()
+                        {
+                            Id = characteristicForCompare.Id,
+                            Name = characteristicForCompare.Name,
+                            Value = characteristicForCompare.NumberValue.ToString(),
+                            IsEssential = characteristicFind.IsEssential,
+                            Type = characteristicForCompare.Type,
+                            Unit = characteristicFind.UnitOfMeasurement
+                        };
+                        if (GetValueInCI(double.Parse(characteristicFind.Value), 
                                 characteristicFind.UnitOfMeasurement.Id) == GetValueInCI(
                                     characteristicForCompare.NumberValue, 
                                     characteristicForCompare.UnitOfMeasurementId) + double.Epsilon)
-                                if (characteristicFind.IsEssential)
-                                    response.Data.CountSuitableEssential++;
-                                else
-                                    response.Data.CountSuitableUnessential++;
+                        {
+                            if (characteristicFind.IsEssential)
+                                response.Data.CountSuitableEssential++;
+                            else
+                                response.Data.CountSuitableUnessential++;
+                            characteristicDto.IsMatch = true;
+                            response.Data.Characteristics.Add(characteristicDto);
                             continue;
+                        }
+                        characteristicDto.IsMatch = false;
+                        response.Data.Characteristics.Add(characteristicDto);
+                        continue;
                     }
-                    if (characteristicForCompare.Type == "Range")
+                    if (characteristicForCompare.Type == TypeCharacteristicConstants.RANGE)
                     {
                         var characteristicDto = new CharacteristicDto()
                         {
@@ -190,7 +210,8 @@ namespace Server.Services
                             Value = characteristicForCompare.MinValue.ToString() + " - " + 
                                 characteristicForCompare.MaxValue.ToString(),
                             IsEssential = characteristicFind.IsEssential,
-                            Type = characteristicForCompare.Type
+                            Type = characteristicForCompare.Type,
+                            Unit = characteristicFind.UnitOfMeasurement
                         };
                         double minValue;
                         double maxValue;

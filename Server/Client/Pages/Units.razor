@@ -24,10 +24,10 @@
     {
         <tr>
             <th>
-                <input type="text" value="@unit.Name" @oninput="(e) => unit.Name = e.Value.ToString()"/>
+                <input type="text" value="@unit.Name" @oninput="(e) => unit.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
-                <input type="text" value="@unit.MultiplicationFactor.ToString()" @oninput="(e) => unit.MultiplicationFactor = double.Parse(e.Value.ToString())" />
+                <input type="text" value="@unit.MultiplicationFactor.ToString()" @oninput="(e) => unit.MultiplicationFactor = double.TryParse(e.Value.ToString(), out var value) ? value : 1" />
             </th>
             <th>
                 <button @onclick="() => UpdateUnit(unit)">Изменить</button>

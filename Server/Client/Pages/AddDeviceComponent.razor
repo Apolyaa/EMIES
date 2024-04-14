@@ -4,11 +4,11 @@
 @inject HttpClient httpClient
 
 <p>Введите название прибора</p>
-<input type="text" @oninput="(e) => _addDevice.Name = e.Value.ToString()"/>
+<input type="text" @oninput="(e) => _addDevice.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
 <p>Введите цену</p>
-<input type="text" @oninput="(e) => _addDevice.Price = double.Parse(e.Value.ToString())" />
+<input type="text" @oninput="(e) => _addDevice.Price = double.TryParse(e.Value.ToString(), out var value) ? value : 0" />
 <p>Введите ссылку на прибор</p>
-<input type="text" @oninput="(e) => _addDevice.Url = e.Value.ToString()" />
+<input type="text" @oninput="(e) => _addDevice.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
 <p>Выберите производителя</p>
 
 <input @onchange="(e) => _addDevice.Producer = _producers.FirstOrDefault(t => t.Name == e.Value.ToString())" type="text" name="producers" list="producersname">

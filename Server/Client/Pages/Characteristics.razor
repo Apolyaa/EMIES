@@ -24,7 +24,7 @@
     {
         <tr>
             <th>
-                <input type="text" value="@characteristic.Name" @oninput="(e) => characteristic.Name = e.Value.ToString()" />
+                <input type="text" value="@characteristic.Name" @oninput="(e) => characteristic.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <input type="text" value="@GetSynonyms(characteristic.Id)" @oninput="(e) => ChangeSynonym(characteristic.Id, e.Value.ToString())"/>

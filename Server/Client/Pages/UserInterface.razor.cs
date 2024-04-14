@@ -23,8 +23,6 @@ namespace Client.Pages
         };
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public Guid _selectType;
-        public string _error = string.Empty;
-        public bool _IsError;
         public RequestFind _userRequest = new(); 
         public ResultDto _result = new();
         public IModalReference _addCharacteristic;
@@ -36,13 +34,13 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _types = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
             var responseUnits = await httpClient.GetAsync("http://localhost:5102/getunits");
             var resultUnits = await responseUnits.Content.ReadFromJsonAsync<Response<List<UnitOfMeasurementDto>>>();
             if (resultUnits is not null && resultUnits.Success)
                 _unitOfMesurements = resultUnits.Data!;
             else
-                _error = resultUnits.Message!;
+                ShowError(resultUnits.Message);
             Bus.Subscribe<DictionaryOfCharacteristicDto>(AddCharacteristicInTable);
         }
 
@@ -128,10 +126,18 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _result = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
             var parameters = new ModalParameters().Add(nameof(ResultShowComponent.Result), _result);
-            _resultShow = Modal.Show<ResultShowComponent>("Результат подбора оборудования", parameters);
+            var options = new ModalOptions()
+            {
+                Size = ModalSize.Large
+            };
+            _resultShow = Modal.Show<ResultShowComponent>("Результат подбора оборудования", parameters, options);
 
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

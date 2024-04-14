@@ -1,4 +1,6 @@
-﻿using Client.Contracts;
+﻿using Blazored.Modal.Services;
+using Client.Contracts;
+using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace Client.Pages
@@ -9,9 +11,8 @@ namespace Client.Pages
         public string? _login;
         public string? _password;
         public string? _passwordAck;
-        public string? _error;
-        public bool _isError = false;
         public bool _isExpert = false;
+        [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
         public async void Register()
         {
@@ -25,19 +26,19 @@ namespace Client.Pages
 
                 if (_name is null)
                 {
-                    PrintError("Поле ФИО является обязательным.");
+                    ShowError("Поле ФИО является обязательным.");
                     return;
                 }
 
                 if (_login is null)
                 {
-                    PrintError("Поле Логин является обязательным.");
+                    ShowError("Поле Логин является обязательным.");
                     return;
                 }
 
                 if (_password is null)
                 {
-                    PrintError("Поле Пароль является обязательным.");
+                    ShowError("Поле Пароль является обязательным.");
                     return;
                 }
 
@@ -46,7 +47,7 @@ namespace Client.Pages
                 var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
                 if (result is not null && !result.Success)
                 {
-                    PrintError(result.Message!);
+                    ShowError(result.Message!);
                     return;
                 }
 
@@ -56,11 +57,9 @@ namespace Client.Pages
                 }
                 else
                     Manager.NavigateTo("/expertinterface");
-
-                _isError = false;
             }
 
-            PrintError("Пароли не совпадают!");
+            ShowError("Пароли не совпадают!");
             StateHasChanged();
         }
 
@@ -68,11 +67,9 @@ namespace Client.Pages
         {
             Manager.NavigateTo("/entry");
         }
-        private void PrintError(string message)
+        public void ShowError(string message)
         {
-            _isError = true;
-            _error = message;
-            StateHasChanged();
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

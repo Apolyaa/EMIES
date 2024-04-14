@@ -5,12 +5,12 @@
 @inject IComponentBus Bus
 
 <p>Поиск</p>
-<input type="text" @oninput="(e) => _findText = e.Value.ToString()" />
+<input type="text" @oninput="(e) => _findText = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString() " />
 <table border="1">
     @foreach (var characteristic in _characteristics)
     {
         <tr>
-            @if (_findText is not null)
+            @if (!string.IsNullOrEmpty(_findText))
             {
                 @if (characteristic.Name.ToLower().Contains(_findText.ToLower()))
                 {

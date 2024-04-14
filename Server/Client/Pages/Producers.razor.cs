@@ -20,7 +20,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _producers = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
 
             Bus.Subscribe<ProducerDto>(AddProducerInTable);
         }
@@ -45,14 +45,14 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _producers.Remove(producerDto);
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task UpdateProducer(ProducerDto producerDto)
         {
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updateproducer", producerDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public void GoToCharacteristics()
         {
@@ -79,6 +79,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

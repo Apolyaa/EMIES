@@ -10,7 +10,6 @@ namespace Client.Pages
     public partial class Types
     {
         public List<TypeOfDeviceDto> _types = new();
-        public string? _error;
         public Guid _selectedType;
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _changeMainCharacteristics;
@@ -101,6 +100,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

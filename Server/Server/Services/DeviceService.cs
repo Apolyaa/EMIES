@@ -3,6 +3,7 @@ using Client.Contracts;
 using Server.EfCore.Model;
 using Server.Repositories;
 using System.Data;
+using System.Text.Json;
 
 namespace Server.Services
 {
@@ -13,9 +14,13 @@ namespace Server.Services
         private readonly ISourceService _sourceService;
         private readonly IProducerService _producerService;
         private readonly ITypeOfDeviceService _typeOfDeviceService;
+        private readonly IResultDeviceRepository _resultDeviceRepository;
+        private readonly IResultRepository _resultRepository;
         private readonly IMapper _mapper;
         public DeviceService(IDeviceRepository deviceRepository, ICharacteristicService characteristicService,
-            ISourceService sourceService, IProducerService producerService, IMapper mapper, ITypeOfDeviceService typeOfDeviceService)
+            ISourceService sourceService, IProducerService producerService, IMapper mapper, 
+            ITypeOfDeviceService typeOfDeviceService, IResultDeviceRepository resultDeviceRepository,
+            IResultRepository resultRepository)
         {
             _deviceRepository = deviceRepository;
             _characteristicService = characteristicService;
@@ -23,10 +28,20 @@ namespace Server.Services
             _producerService = producerService;
             _mapper = mapper;
             _typeOfDeviceService = typeOfDeviceService;
+            _resultDeviceRepository = resultDeviceRepository;
+            _resultRepository = resultRepository;
         }
         public Response<ResultDto> GetSuitableDevices(Guid typeId, List<CharacteristicForFindDto> characteristicForFinds)
         {
             Response<ResultDto> response = new();
+            ResultEntity resultEntity = new() 
+            { 
+                Id = Guid.NewGuid(),
+                InitialData = JsonSerializer.Serialize(characteristicForFinds),
+                UserId = Guid.Parse("52b8cf62-0c6e-4c32-8549-c89763580369")
+            };
+            _resultRepository.Insert(resultEntity);
+            _resultRepository.Save();
             try
             {
                 var devices = _deviceRepository.GetAll().Where(d => d.TypeId == typeId);
@@ -49,7 +64,18 @@ namespace Server.Services
                         PercentUnessential = persentUnessential,
                         CharacteristicsResults = responseResultCompareCharacteristics.Data.Characteristics
                     };
+                    ResultDeviceEntity resultDeviceEntity = new()
+                    {
+                        Id = Guid.NewGuid(),
+                        ResultId = resultEntity.Id,
+                        DeviceId = device.Id,
+                        PercentEssential = percentEssential,
+                        PercentUnessential = persentUnessential,
+                        CharacteristicsResults = responseResultCompareCharacteristics.Data.Characteristics
+                            .Select(c => c.Id.ToString()).ToArray()
+                    };
                     resultDevices.Add(resultDeviceDto);
+                    _resultDeviceRepository.Insert(resultDeviceEntity);
 
                     var responseSource = _sourceService.GetSourceById(device.SourceId);
                     if (!responseSource.Success)
@@ -64,13 +90,18 @@ namespace Server.Services
 
                     suitableDevices.Add(deviceDto);
                 }
+                _resultDeviceRepository.Save();
+
                 ResultDto resultDto = new()
                 {
                     InitialData = characteristicForFinds,
                     ResultsDevices = resultDevices,
                     Devices = suitableDevices
                 };
-                
+
+
+
+                response.Data = resultDto;
                 return response;
             }
             catch (Exception ex)

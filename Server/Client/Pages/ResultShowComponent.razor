@@ -1,4 +1,4 @@
-﻿<table>
+﻿<table border="1">
     <tr>
         <th>Название прибора</th>
         <th>Процент совпадения важных характеристик</th>
@@ -15,7 +15,9 @@
             <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentUnessential</th>
             <th>@device.Price</th>
             <th>@device.Url</th>
-
+            <th>
+                <button @onclick="() => CompareCharacteristics(device)">Сравнить характеристики</button>
+            </th>
         </tr>
     }
 </table>

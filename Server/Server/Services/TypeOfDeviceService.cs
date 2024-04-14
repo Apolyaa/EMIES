@@ -53,6 +53,14 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existType = _typeOfDeviceRepository.GetAll().
+                    FirstOrDefault(t => t.Name.ToLower() == typeOfDeviceDto.Name.ToLower());
+                if (existType is not null)
+                {
+                    response.Message = "Тип с таким названием уже существует.";
+                    throw new Exception("Type is already exists.");
+                }            
+
                 _typeOfDeviceRepository.Insert(_mapper.Map<TypeOfDevicesEntity>(typeOfDeviceDto));
                 _typeOfDeviceRepository.Save();
                 var addResponse = _characteristicService.AddTypesCharacterictics(typeOfDeviceDto.MainCharacteristics,
@@ -67,7 +75,8 @@ namespace Server.Services
                 Console.WriteLine("Add type failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при добавлении типа.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при добавлении типа.";
                 return response;
             }
         }
@@ -76,6 +85,15 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existType = _typeOfDeviceRepository.GetAll().
+                    FirstOrDefault(t => t.Name.ToLower() == typeOfDeviceDto.Name.ToLower() &&
+                    t.Id != typeOfDeviceDto.Id);
+                if (existType is not null)
+                {
+                    response.Message = "Тип с таким названием уже существует.";
+                    throw new Exception("Type is already exists.");
+                }
+
                 _typeOfDeviceRepository.Update(_mapper.Map<TypeOfDevicesEntity>(typeOfDeviceDto));
                 _typeOfDeviceRepository.Save();
                 var updateResponse = _characteristicService.ChangeTypesCharacteristics(typeOfDeviceDto.MainCharacteristics,
@@ -90,7 +108,8 @@ namespace Server.Services
                 Console.WriteLine("Update type failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при изменении типа.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при изменении типа.";
                 return response;
             }
         }

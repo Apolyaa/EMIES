@@ -24,7 +24,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _characteristics = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
             foreach(var characteristic in _characteristics)
             {
                 StringBuilder stringBuilder = new();
@@ -44,7 +44,7 @@ namespace Client.Pages
                 _synonyms.Remove(characteristicDto.Id);
             }
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task UpdateCharacteristic(DictionaryOfCharacteristicDto characteristicDto)
         {
@@ -116,6 +116,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

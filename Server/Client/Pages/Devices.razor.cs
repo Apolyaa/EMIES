@@ -25,14 +25,14 @@ namespace Client.Pages
             if (resultDevice is not null && resultDevice.Success)
                 _devices = resultDevice.Data!;
             else
-                _error = resultDevice.Message!;
+                ShowError(resultDevice.Message);
 
             var responseProducer = await httpClient.GetAsync("http://localhost:5102/getproducers");
             var resultProducer = await responseProducer.Content.ReadFromJsonAsync<Response<List<ProducerDto>>>();
             if (resultProducer is not null && resultProducer.Success)
                 _producers = resultProducer.Data!;
             else
-                _error = resultProducer.Message!;
+                ShowError(resultProducer.Message);
 
 
             var responseSource = await httpClient.GetAsync("http://localhost:5102/getsources");
@@ -40,14 +40,14 @@ namespace Client.Pages
             if (resultSource is not null && resultSource.Success)
                 _sources = resultSource.Data!;
             else
-                _error = resultSource.Message!;
+                ShowError(resultSource.Message);
 
             var responseType = await httpClient.GetAsync("http://localhost:5102/gettypes");
             var resultType = await responseType.Content.ReadFromJsonAsync<Response<List<TypeOfDeviceDto>>>();
             if (resultType is not null && resultType.Success)
                 _types = resultType.Data!;
             else
-                _error = resultType.Message!;
+                ShowError(resultType.Message);
 
             Bus.Subscribe<DeviceDto>(AddDeviceInTable);
             Bus.Subscribe<List<CharacteristicDto>>(ChangeCharacteristicsInDevice);
@@ -98,14 +98,14 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _devices.Remove(deviceDto);
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task UpdateDevice(DeviceDto deviceDto)
         {
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updatedevice", deviceDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public string GetProducerName(DeviceDto deviceDto)
         {
@@ -144,6 +144,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

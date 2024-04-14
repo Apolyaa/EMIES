@@ -4,7 +4,7 @@
 @inject HttpClient httpClient
 
 <p>Введите название характеристики</p>
-<input type="text" @oninput="(e) => _characteristic.Name = e.Value.ToString()"/>
+<input type="text" @oninput="(e) => _characteristic.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
 <p>Введите синонимы через запятую</p>
-<input type="text" @oninput="(e) => _stringSynonyms = e.Value.ToString()"/>
+<input type="text" @oninput="(e) => _stringSynonyms = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
 <button @onclick="() => AddCharacteristic()">Добавить характеристику в словарь</button>

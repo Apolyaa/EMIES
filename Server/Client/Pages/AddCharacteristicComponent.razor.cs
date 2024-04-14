@@ -1,4 +1,6 @@
-﻿using Client.Contracts;
+﻿using Blazored.Modal.Services;
+using Client.Contracts;
+using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace Client.Pages
@@ -7,7 +9,7 @@ namespace Client.Pages
     {
         public List<DictionaryOfCharacteristicDto> _characteristics = new();
         public DictionaryOfCharacteristicDto? _selectCharacteristic;
-        public string? _error;
+        [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public string? _findText;
 
         protected override async Task OnParametersSetAsync()
@@ -17,7 +19,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _characteristics = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public void SelectCharacteristic(string name)
         {
@@ -26,6 +28,10 @@ namespace Client.Pages
         public void AddCharacteristic()
         {
             Bus.Publish<DictionaryOfCharacteristicDto>(_selectCharacteristic);
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

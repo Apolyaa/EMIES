@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Client.Contracts;
+using Client.Pages;
 using Server.EfCore.Model;
 using Server.Repositories;
 
@@ -61,6 +62,13 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existProducer = _producerRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == producerDto.Name.ToLower());
+                if (existProducer is not null)
+                {
+                    response.Message = "Производитель с таким названием уже существует.";
+                    throw new Exception("Producer is already exist");
+                }
                 var producerEntity = _mapper.Map<ProducerEntity>(producerDto);
 
                 _producerRepository.Insert(producerEntity);
@@ -73,7 +81,8 @@ namespace Server.Services
                 Console.WriteLine("Add producer failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при добавлении производителя.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при добавлении производителя.";
                 return response;
             }
         }
@@ -101,6 +110,15 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existProducer = _producerRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == producerDto.Name.ToLower() &&
+                    s.Id != producerDto.Id);
+                if (existProducer is not null)
+                {
+                    response.Message = "Производитель с таким названием уже существует.";
+                    throw new Exception("Producer is already exist");
+                }
+
                 var producerEntity = _mapper.Map<ProducerEntity>(producerDto);
                 _producerRepository.Update(producerEntity);
                 _producerRepository.Save();
@@ -112,7 +130,8 @@ namespace Server.Services
                 Console.WriteLine("Update producer failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при изменении производителя.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при изменении производителя.";
                 return response;
             }
         }

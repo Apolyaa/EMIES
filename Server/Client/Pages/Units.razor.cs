@@ -10,7 +10,6 @@ namespace Client.Pages
     public partial class Units
     {
         public List<UnitOfMeasurementDto> _units = new();
-        public string? _error;
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _addUnit;
         protected override async Task OnParametersSetAsync()
@@ -20,7 +19,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _units = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
 
             Bus.Subscribe<UnitOfMeasurementDto>(AddUnitInTable);
         }
@@ -47,14 +46,14 @@ namespace Client.Pages
                 _units.Remove(unitOfMesurementDto);
             }
             else
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task UpdateUnit(UnitOfMeasurementDto unitOfMesurementDto)
         {
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updateunit", unitOfMesurementDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public void GoToCharacteristics()
         {
@@ -81,6 +80,10 @@ namespace Client.Pages
         public void GoToProducers()
         {
             Manager.NavigateTo("/producers");
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

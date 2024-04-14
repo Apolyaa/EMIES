@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Client.Contracts;
+using Client.Pages;
 using Server.EfCore.Model;
 using Server.Repositories;
 
@@ -62,6 +63,15 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existSource = _sourceRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == source.Name.ToLower());
+                if (existSource is not null)
+                {
+                    response.Message = "Источник с таким названием уже существует.";
+                    throw new Exception("Source is already exist");
+                }
+                    
+
                 var sourceEntity = _mapper.Map<SourceEntity>(source);
 
                 _sourceRepository.Insert(sourceEntity);
@@ -74,7 +84,8 @@ namespace Server.Services
                 Console.WriteLine("Add source failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при добавлении источника.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при добавлении источника.";
                 return response;
             }
         }
@@ -102,6 +113,14 @@ namespace Server.Services
             Response<bool> response = new();
             try
             {
+                var existSource = _sourceRepository.GetAll().
+                    FirstOrDefault(s => s.Name.ToLower() == sourceDto.Name.ToLower() && s.Id != sourceDto.Id);
+                if (existSource is not null)
+                {
+                    response.Message = "Источник с таким названием уже существует.";
+                    throw new Exception("Source is already exist");
+                }
+
                 var sourceEntity = _mapper.Map<SourceEntity>(sourceDto);
                 _sourceRepository.Update(sourceEntity);
                 _sourceRepository.Save();
@@ -113,7 +132,8 @@ namespace Server.Services
                 Console.WriteLine("Update source failed.");
                 Console.WriteLine(ex.ToString());
                 response.Success = false;
-                response.Message = "Ошибка при изменении источника.";
+                if (string.IsNullOrEmpty(response.Message))
+                    response.Message = "Ошибка при изменении источника.";
                 return response;
             }
         }

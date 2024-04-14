@@ -25,13 +25,13 @@
     {
         <tr>
             <th>
-                <input type="text" value="@type.Name" @oninput="(e) => type.Name = e.Value.ToString()" />
+                <input type="text" value="@type.Name" @oninput="(e) => type.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <button @onclick="() => ChangeMainCharacteristics(type)">Изменение основных характеристик</button>
             </th>
             <th>
-                <input type="text" value="@type.Description" @oninput="(e) => type.Description = e.Value.ToString()" />
+                <input type="text" value="@type.Description" @oninput="(e) => type.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
             </th>
             <th>
                 <button @onclick="() => UpdateType(type)">Изменить</button>

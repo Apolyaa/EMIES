@@ -26,7 +26,7 @@ namespace Client.Pages
             { "Массив значений",TypeCharacteristicConstants.ARRAYOFVALUES },
             { "Булево значение (да, нет)", TypeCharacteristicConstants.BOOLEAN }
         };
-        public string? _error;
+
         [CascadingParameter] public IModalService Modal { get; set; } = default!;
         public IModalReference _addCharacteristic;
         protected override async Task OnInitializedAsync()
@@ -53,14 +53,14 @@ namespace Client.Pages
             if (resultUnits is not null && resultUnits.Success)
                 _units = resultUnits.Data!;
             else
-                _error = resultUnits.Message!;
+                ShowError(resultUnits.Message);
 
             var responseDictionary = await httpClient.GetAsync("http://localhost:5102/getcharacteristics");
             var resultDictionary = await responseDictionary.Content.ReadFromJsonAsync<Response<List<DictionaryOfCharacteristicDto>>>();
             if (resultDictionary is not null && resultDictionary.Success)
                 _dictionaryOfCharacteristics = resultDictionary.Data!;
             else
-                _error = resultDictionary.Message!;
+                ShowError(resultDictionary.Message);
 
             Bus.Subscribe<DictionaryOfCharacteristicDto>(AddCharacteristicInTable);
         }
@@ -89,6 +89,10 @@ namespace Client.Pages
             });
             _addCharacteristic.Close();
             StateHasChanged();
+        }
+        public void ShowError(string message)
+        {
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }

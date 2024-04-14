@@ -1,4 +1,6 @@
-﻿using Client.Contracts;
+﻿using Blazored.Modal.Services;
+using Client.Contracts;
+using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace Client.Pages
@@ -7,20 +9,19 @@ namespace Client.Pages
     {
         public string? _login;
         public string? _password;
-        public string? _error;
-        public bool _isError = false;
+        [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
         public async void Enter()
         {
             if (_login is null)
             {
-                PrintError("Поле Логин является обязательным.");
+                ShowError("Поле Логин является обязательным.");
                 return;
             }
 
             if (_password is null)
             {
-                PrintError("Поле Пароль является обязательным.");
+                ShowError("Поле Пароль является обязательным.");
                 return;
             }
 
@@ -33,7 +34,7 @@ namespace Client.Pages
 
             if (result is not null && !result.Success)
             {
-                PrintError(result.Message!);
+                ShowError(result.Message!);
                 return;
             }
 
@@ -43,19 +44,15 @@ namespace Client.Pages
             }                
             else
                 Manager.NavigateTo("/expertinterface");
-            _isError = false;
         }
 
         public void GoToRegistration()
         {
             Manager.NavigateTo("/registration");
         }
-
-        private void PrintError(string message)
+        public void ShowError(string message)
         {
-            _isError = true;
-            _error = message;
-            StateHasChanged();
+            Modal.Show<ErrorComponent>(message);
         }
     }
 }
