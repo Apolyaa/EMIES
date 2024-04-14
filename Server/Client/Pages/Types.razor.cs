@@ -20,7 +20,7 @@ namespace Client.Pages
             if (result is not null && result.Success)
                 _types = result.Data!;
             else
-                _error = result.Message!;
+                ShowError(result.Message);
 
             Bus.Subscribe<List<DictionaryOfCharacteristicDto>>(ChangeMainCharacteristics);
         }
@@ -44,7 +44,7 @@ namespace Client.Pages
             var responseHttp = await httpClient.PostAsJsonAsync($"http://localhost:5102/updatetype", type);
             var result = await responseHttp.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
 
             _changeMainCharacteristics.Close();
             StateHasChanged();
@@ -55,7 +55,7 @@ namespace Client.Pages
             var responseHttp = await httpClient.PutAsJsonAsync($"http://localhost:5102/addtype", typeOfDeviceDto);
             var result = await responseHttp.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
             else
                 _types.Add(typeOfDeviceDto);
         }
@@ -64,14 +64,14 @@ namespace Client.Pages
             var responseHttp = await httpClient.PostAsJsonAsync($"http://localhost:5102/updatetype", typeOfDeviceDto);
             var result = await responseHttp.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public async Task DeleteType(TypeOfDeviceDto typeOfDeviceDto)
         {
             var responseHttp = await httpClient.DeleteAsync($"http://localhost:5102/deletetype/{typeOfDeviceDto.Id}");
             var result = await responseHttp.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
             else
                 _types.Remove(typeOfDeviceDto);
         }

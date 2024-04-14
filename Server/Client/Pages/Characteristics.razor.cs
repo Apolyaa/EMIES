@@ -51,7 +51,7 @@ namespace Client.Pages
             var response = await httpClient.PostAsJsonAsync($"http://localhost:5102/updatecharacteristic", characteristicDto);
             var result = await response.Content.ReadFromJsonAsync<Response<bool>>();
             if (result is not null && !result.Success)
-                _error = result.Message!;
+                ShowError(result.Message);
         }
         public void AddCharacteristic()
         {
