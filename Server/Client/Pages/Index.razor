@@ -4,6 +4,8 @@
 @using Microsoft.AspNetCore.Components.Routing
 @using System.Diagnostics
 
+@inject IJSRuntime JS
+
 @inject NavigationManager Manager
 
 <div class="wrapper">
@@ -16,30 +18,33 @@
 
 </div>
 
+<script>
+
+	function navigateToEntry() {
+		document.location.href = "/entry";
+	}
+
+	function setTimeoutNavigateToEntry() {
+		setTimeout(navigateToEntry, 2000);
+	}
+
+
+</script>
+
 <CascadingBlazoredModal>
 
 </CascadingBlazoredModal>
 @code {
+
 	protected override void OnInitialized()
 	{
 		//Manager.NavigateTo("/entry");
 	}
 
 
-	//Работает, но нет анимации.
-	// protected override void OnAfterRender(bool firstRender)
-	// {
-		
-	// 	Manager.NavigateTo("/entry");
-	// }
-
-
-
-	//Работает, но вызывает ошибку.
 	protected override async void OnAfterRender(bool firstRender)
 	{
-		//await Task.Delay(2000);
-		Manager.NavigateTo("/entry");
+		await JS.InvokeVoidAsync("setTimeoutNavigateToEntry");
 	}
 	
 
