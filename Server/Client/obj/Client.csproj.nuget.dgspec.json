@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj": {}
+    "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj": {}
   },
   "projects": {
-    "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj": {
+    "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj",
+        "projectUniqueName": "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj",
         "projectName": "Client",
-        "projectPath": "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj",
-        "packagesPath": "C:\\Users\\Apolya\\.nuget\\packages\\",
-        "outputPath": "D:\\gitlab\\EMIES\\Server\\Client\\obj\\",
+        "projectPath": "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj",
+        "packagesPath": "C:\\Users\\alpes\\.nuget\\packages\\",
+        "outputPath": "D:\\Polina\\EMIES\\Server\\Client\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Apolya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alpes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +38,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -56,6 +65,24 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.9, )"
+            },
+            "Microsoft.NET.ILLink.Analyzers": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.100-1.23211.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.100-1.23211.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.NET.Sdk.WebAssembly.Pack": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )",
+              "autoReferenced": true
             }
           },
           "imports": [
@@ -72,7 +99,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[7.0.9, 7.0.9]"
+              "version": "[7.0.18, 7.0.18]"
             }
           ],
           "frameworkReferences": {
@@ -80,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

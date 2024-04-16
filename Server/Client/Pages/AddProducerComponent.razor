@@ -3,10 +3,15 @@
 @inject IComponentBus Bus
 @inject HttpClient httpClient
 
-<p>Введите название производителя</p>
-<input type="text" @oninput="(e) => _producer.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите контакты</p>
-<input type="text" @oninput="(e) => _producer.Contacts = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите описание</p>
-<input type="text" @oninput="(e) => _producer.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<button @onclick="() => AddProducer()">Добавить производителя</button>
+
+
+
+<div class="modal-wrapper">
+	<p>Введите название производителя</p>
+	<input type="text" @oninput="(e) => _producer.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите контакты</p>
+	<input type="text" @oninput="(e) => _producer.Contacts = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите описание</p>
+	<input type="text" @oninput="(e) => _producer.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<button class="button" @onclick="() => AddProducer()">Добавить производителя</button>
+</div>

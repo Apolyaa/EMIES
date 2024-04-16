@@ -4,10 +4,15 @@
 @inject HttpClient httpClient
 @inject NavigationManager Manager
 
-<h1>Авторизация</h1>
-<h3>Введите логин</h3>
-<input type="text" @oninput="(e) => _login = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<h3>Введите пароль</h3>
-<input type="password" @oninput="(e) => _password = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<button @onclick="() => Enter()">Войти</button>
-<button @onclick="() => GoToRegistration()">Регистрация</button>
+<div class="wrapper"
+	<h1>Авторизация</h1>
+	<h3>Введите логин</h3>
+	<input type="text" @oninput="(e) => _login = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<h3>Введите пароль</h3>
+	<input type="password" @oninput="(e) => _password = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+
+	<div class="entry-buttons">
+		<button class="button" @onclick="() => Enter()">Войти</button>
+		<button class="button" @onclick="() => GoToRegistration()">Регистрация</button>
+	</div>
+</div>

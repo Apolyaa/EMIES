@@ -3,7 +3,10 @@
 @inject HttpClient httpClient
 @inject IComponentBus Bus
 @inject NavigationManager Manager
-<table border="1">
+
+<div class="modal-wrapper">
+
+<table class="table">
     <caption>Таблица характеристик</caption>
     <tr>
         <th>Название</th>
@@ -12,6 +15,7 @@
         <th>Единица измерения</th>
         <th>Действия</th>
     </tr>
+    <tbody>
     @if (_characteristics.Any())
     {
         @foreach (var characteristic in _characteristics)
@@ -48,12 +52,13 @@
                     </datalist>
                 </th>
                 <th>
-                    <button @onclick="() => _characteristics.Remove(characteristic)">Удалить</button>
+                        <button class="button" @onclick="() => _characteristics.Remove(characteristic)">Удалить</button>
                 </th>
             </tr>
         }
-    }
-
+            }
+        </tbody>
 </table>
-<button @onclick="() => AddCharacteristic()">Добавить характеристику</button>
-<button @onclick="() => SaveCharacteristics()">Сохранить характеристики</button>
+<button class="button" @onclick="() => AddCharacteristic()">Добавить характеристику</button>
+    <button class="button" @onclick="() => SaveCharacteristics()">Сохранить характеристики</button>
+</div>

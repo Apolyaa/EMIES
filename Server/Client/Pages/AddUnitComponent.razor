@@ -3,8 +3,12 @@
 @inject IComponentBus Bus
 @inject HttpClient httpClient
 
-<p>Введите название единицы измерения</p>
-<input type="text" @oninput="(e) => _unit.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите коэффициент умножения до системы СИ</p>
-<input type="text" @oninput="(e) => _unit.MultiplicationFactor = double.TryParse(e.Value.ToString(), out var value) ? value : 1" />
-<button @onclick="() => AddUnit()">Добавить единицу измерения</button>
+<div class="modal-wrapper">
+	<p>Введите название единицы измерения</p>
+	<input type="text" @oninput="(e) => _unit.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите коэффициент умножения до системы СИ</p>
+	<input type="text" @oninput="(e) => _unit.MultiplicationFactor = double.TryParse(e.Value.ToString(), out var value) ? value : 1" />
+	<button class="button" @onclick="() => AddUnit()">Добавить единицу измерения</button>
+</div>
+
+
