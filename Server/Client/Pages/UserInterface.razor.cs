@@ -4,6 +4,7 @@ using Blazored.Modal.Services;
 using Client.Contracts;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace Client.Pages
 {
@@ -120,6 +121,17 @@ namespace Client.Pages
         public async Task FindDevices()
         {
             _userRequest.Characteristics = _sourceCharacteristics.Values.ToList();
+            var errorCharacteristic = _userRequest.Characteristics
+                .Where(c => (c.TypeCharacteristic == TypeCharacteristicConstants.NUMBER || c.TypeCharacteristic == TypeCharacteristicConstants.RANGE) && c.UnitOfMeasurement is null);
+            StringBuilder stringBuilder = new();
+            if (errorCharacteristic.Any())
+            {
+                foreach (var characteristic in errorCharacteristic)
+                    stringBuilder.AppendLine($"Не указана единица измерения у характеристики {characteristic.Name}.");
+                ShowError(stringBuilder.ToString());
+                return;
+            }
+
             _userRequest.TypeId = _selectType;
             var response = await httpClient.PostAsJsonAsync("http://localhost:5102/finddevices", _userRequest);
             var result = await response.Content.ReadFromJsonAsync<Response<ResultDto>>();

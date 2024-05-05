@@ -60,7 +60,6 @@ namespace Client.Pages
             }
 
             ShowError("Пароли не совпадают!");
-            StateHasChanged();
         }
 
         public void GoToEntry()
