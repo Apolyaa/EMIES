@@ -32,6 +32,19 @@ namespace Client.Pages
         public IModalReference _addCharacteristic;
         protected override async Task OnInitializedAsync()
         {
+            var responseUnits = await httpClient.GetAsync("http://localhost:5102/getunits");
+            var resultUnits = await responseUnits.Content.ReadFromJsonAsync<Response<List<UnitOfMeasurementDto>>>();
+            if (resultUnits is not null && resultUnits.Success)
+                _units = resultUnits.Data!;
+            else
+                ShowError(resultUnits.Message);
+
+            var responseDictionary = await httpClient.GetAsync("http://localhost:5102/getcharacteristics");
+            var resultDictionary = await responseDictionary.Content.ReadFromJsonAsync<Response<List<DictionaryOfCharacteristicDto>>>();
+            if (resultDictionary is not null && resultDictionary.Success)
+                _dictionaryOfCharacteristics = resultDictionary.Data!;
+            else
+                ShowError(resultDictionary.Message);
 
             if (AddMode)
             {
@@ -48,20 +61,6 @@ namespace Client.Pages
             }
             else
                 _characteristics = Characteristics;
-
-            var responseUnits = await httpClient.GetAsync("http://localhost:5102/getunits");
-            var resultUnits = await responseUnits.Content.ReadFromJsonAsync<Response<List<UnitOfMeasurementDto>>>();
-            if (resultUnits is not null && resultUnits.Success)
-                _units = resultUnits.Data!;
-            else
-                ShowError(resultUnits.Message);
-
-            var responseDictionary = await httpClient.GetAsync("http://localhost:5102/getcharacteristics");
-            var resultDictionary = await responseDictionary.Content.ReadFromJsonAsync<Response<List<DictionaryOfCharacteristicDto>>>();
-            if (resultDictionary is not null && resultDictionary.Success)
-                _dictionaryOfCharacteristics = resultDictionary.Data!;
-            else
-                ShowError(resultDictionary.Message);
 
             Bus.Subscribe<DictionaryOfCharacteristicDto>(AddCharacteristicInTable);
         }

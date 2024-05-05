@@ -474,6 +474,7 @@ namespace Server.Services
                     var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
                     characteristicDto.Unit = _mapper.Map<UnitOfMeasurementDto>(_unitOfMeasurementRepository.GetAll()
                         .FirstOrDefault(t => t.Id == characteristic.UnitOfMeasurementId));
+                    characteristicDto.Value = GetValueCharacteristic(characteristic);
                     characteristicDto.DictionaryOfCharacteristic = _mapper.Map<DictionaryOfCharacteristicDto>(_dictionaryCharacteristicRepository
                         .GetAll().FirstOrDefault(t => t.Id == characteristic.CharacteristicId));
                     response.Data.Add(characteristicDto);
@@ -487,6 +488,39 @@ namespace Server.Services
                 response.Success = false;
                 response.Message = "Ошибка при получении характеристик прибора.";
                 return response;
+            }
+
+        }
+        private string GetValueCharacteristic(CharacteristicEntity characteristicEntity)
+        {
+            switch (characteristicEntity.Type)
+            {
+                case TypeCharacteristicConstants.NUMBER:
+                    {
+                        return characteristicEntity.NumberValue.ToString();
+                    }
+                case TypeCharacteristicConstants.STRING:
+                    {
+                        return characteristicEntity.StringValue;
+                    }
+                case TypeCharacteristicConstants.BOOLEAN:
+                    {
+                        return characteristicEntity.BooleanValue ? "Да" : "Нет"; 
+                    }
+                case TypeCharacteristicConstants.ARRAYOFVALUES:
+                    {
+                        StringBuilder stringBuilder = new();
+                        foreach (var value in characteristicEntity.ArrayOfValues)
+                            stringBuilder.Append(value + ", ");
+                        return stringBuilder.ToString().Trim(' ').Trim(',');
+                    }
+                case TypeCharacteristicConstants.RANGE:
+                    {
+                        return characteristicEntity.MinValue.ToString() + " - " + 
+                            characteristicEntity.MaxValue.ToString();
+                    }
+                 default:
+                    return string.Empty;
             }
         }
     }
