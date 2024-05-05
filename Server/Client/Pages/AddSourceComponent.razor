@@ -3,10 +3,14 @@
 @inject IComponentBus Bus
 @inject HttpClient httpClient
 
-<p>Введите название источника</p>
-<input type="text" @oninput="(e) => _source.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите ссылку на источник</p>
-<input type="text" @oninput="(e) => _source.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите описание</p>
-<input type="text" @oninput="(e) => _source.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<button @onclick="() => AddSource()">Добавить источник</button>
+<div class="modal-wrapper">
+	<p>Введите название источника</p>
+	<input type="text" @oninput="(e) => _source.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите ссылку на источник</p>
+	<input type="text" @oninput="(e) => _source.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите описание</p>
+	<input type="text" @oninput="(e) => _source.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<button class="button" @onclick="() => AddSource()">Добавить источник</button>
+</div>
+
+

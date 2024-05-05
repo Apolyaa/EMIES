@@ -3,8 +3,11 @@
 @inject IComponentBus Bus
 @inject HttpClient httpClient
 
-<p>Введите название характеристики</p>
-<input type="text" @oninput="(e) => _characteristic.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<p>Введите синонимы через запятую</p>
-<input type="text" @oninput="(e) => _stringSynonyms = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<button @onclick="() => AddCharacteristic()">Добавить характеристику в словарь</button>
+<div class="modal-wrapper">
+	<p>Введите название характеристики</p>
+	<input type="text" @oninput="(e) => _characteristic.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<p>Введите синонимы через запятую</p>
+	<input type="text" @oninput="(e) => _stringSynonyms = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<button class="button" @onclick="() => AddCharacteristic()">Добавить характеристику</button>
+</div>
+

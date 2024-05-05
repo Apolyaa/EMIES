@@ -5,39 +5,55 @@
 @inject IComponentBus Bus
 @inject NavigationManager Manager
 
-<a @onclick="() => GoToCharacteristics()">Страница характеристик</a>
-<a @onclick="() => GoToDevices()">Страница приборов</a>
-<a @onclick="() => GoToTypes()">Страница типов</a>
-<a @onclick="() => GoToUnits()">Страница единиц измерения</a>
-<a @onclick="() => GoToSources()">Страница источников</a>
-<a @onclick="() => GoToProducers()">Страница производителей</a>
+<div class="wrapper">
+    <div class="title">
+        Супер пупер класссная система подбора измерительного оборудования с искусственным интеллектом
+    </div>
+    <div class="wrapper_inner">
+        <div class="navigation">
+            <a class="navigation-link" @onclick="() => GoToCharacteristics()">Характеристики</a>
+            <a class="navigation-link" @onclick="() => GoToDevices()">Приборы</a>
+            <a class="navigation-link" @onclick="() => GoToTypes()">Типы приборов</a>
+            <a class="navigation-link" @onclick="() => GoToUnits()">Единицы измерения</a>
+            <a class="navigation-link navigation-link_current" @onclick="() => GoToSources()">Источники</a>
+            <a class="navigation-link" @onclick="() => GoToProducers()">Производители</a>
+        </div>
+        <div class="main">
+            <h3>Источники</h3>
+            <button class="button" @onclick="() => AddSource()">Добавить источник</button>
+            <table class="table">
+                <tr>
+                    <th>Название источника</th>
+                    <th>Ссылка на источник</th>
+                    <th>Описание</th>
+                    <th>Действия</th>
+                </tr>
+                <tbody>
+                    @foreach (var source in _sources)
+                    {
+                        <tr>
+                            <th>
+                                <input type="text" value="@source.Name" @oninput="(e) => source.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+                            </th>
+                            <th>
+                                <input type="text" value="@source.Url" @oninput="(e) => source.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+                            </th>
+                            <th>
+                                <input type="text" value="@source.Description" @oninput="(e) => source.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+                            </th>
+                            <th>
+                                <button class="button" @onclick="() => UpdateSource(source)">Изменить</button>
+                                <button class="button" @onclick="() => DeleteSource(source)">Удалить</button>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
 
-<h3>Источники</h3>
-<button @onclick="() => AddSource()">Добавить источник</button>
-<table border="1">
-    <tr>
-        <th>Название источника</th>
-        <th>Ссылка на источник</th>
-        <th>Описание</th>
-        <th>Действия</th>
-    </tr>
-    @foreach (var source in _sources)
-    {
-        <tr>
-            <th>
-                <input type="text" value="@source.Name" @oninput="(e) => source.Name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-            </th>
-            <th>
-                <input type="text" value="@source.Url" @oninput="(e) => source.Url = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-            </th>
-            <th>
-                <input type="text" value="@source.Description" @oninput="(e) => source.Description = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-            </th>
-            <th>
-                <button @onclick="() => UpdateSource(source)">Изменить</button>
-                <button @onclick="() => DeleteSource(source)">Удалить</button>
-            </th>
-        </tr>
-    }
-</table>
+</div>
+
+
 

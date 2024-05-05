@@ -3526,19 +3526,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Apolya\\.nuget\\packages\\": {}
+    "C:\\Users\\alpes\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\gitlab\\EMIES\\Server\\Server\\Server.csproj",
+      "projectUniqueName": "D:\\Polina\\EMIES\\Server\\Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "D:\\gitlab\\EMIES\\Server\\Server\\Server.csproj",
-      "packagesPath": "C:\\Users\\Apolya\\.nuget\\packages\\",
-      "outputPath": "D:\\gitlab\\EMIES\\Server\\Server\\obj\\",
+      "projectPath": "D:\\Polina\\EMIES\\Server\\Server\\Server.csproj",
+      "packagesPath": "C:\\Users\\alpes\\.nuget\\packages\\",
+      "outputPath": "D:\\Polina\\EMIES\\Server\\Server\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Apolya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\alpes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3546,15 +3551,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj": {
-              "projectPath": "D:\\gitlab\\EMIES\\Server\\Client\\Client.csproj"
+            "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj": {
+              "projectPath": "D:\\Polina\\EMIES\\Server\\Client\\Client.csproj"
             }
           }
         }
@@ -3563,6 +3567,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3611,7 +3620,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
       }
     }
   }

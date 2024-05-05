@@ -2,15 +2,50 @@
 @using Microsoft.AspNetCore.Components
 @using Blazored.Modal
 @using Microsoft.AspNetCore.Components.Routing
+@using System.Diagnostics
+
+@inject IJSRuntime JS
 
 @inject NavigationManager Manager
-<h1>Hello, world!</h1>
-<CascadingBlazoredModal>  
 
-</CascadingBlazoredModal> 
-@code{
-    protected override void OnInitialized()
-    {
-        Manager.NavigateTo("/entry");
-    }
+<div class="wrapper">
+	<div class="title">
+		Супер пупер класссная система подбора измерительного оборудования с искусственным интеллектом
+	</div>
+	<div class="wrapper_inner">
+		<div class="loader"></div>
+	</div>
+
+</div>
+
+<script>
+
+	function navigateToEntry() {
+		document.location.href = "/entry";
+	}
+
+	function setTimeoutNavigateToEntry() {
+		setTimeout(navigateToEntry, 2000);
+	}
+
+
+</script>
+
+<CascadingBlazoredModal>
+
+</CascadingBlazoredModal>
+@code {
+
+	protected override void OnInitialized()
+	{
+		//Manager.NavigateTo("/entry");
+	}
+
+
+	protected override async void OnAfterRender(bool firstRender)
+	{
+		await JS.InvokeVoidAsync("setTimeoutNavigateToEntry");
+	}
+	
+
 }

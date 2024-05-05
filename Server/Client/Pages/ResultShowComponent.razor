@@ -1,25 +1,30 @@
-﻿<table border="1">
-    <tr>
-        <th>Название прибора</th>
-        <th>Процент совпадения важных характеристик</th>
-        <th>Процент совпадения дополнительных характеристик</th>
-        <th>Цена</th>
-        <th>Ссылка на источник</th>
-        <th>Действия</th>
-    </tr>
-    @foreach(var device in Result.Devices)
-    {
+﻿
+
+
+<div class="modal-wrapper">
+    <table class="table">
         <tr>
-            <th>@device.Name</th>
-            <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentEssential</th>
-            <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentUnessential</th>
-            <th>@device.Price</th>
-            <th>@device.Url</th>
-            <th>
-                <button @onclick="() => CompareCharacteristics(device)">Сравнить характеристики</button>
-            </th>
+            <th>Название прибора</th>
+            <th>Процент совпадения важных характеристик</th>
+            <th>Процент совпадения дополнительных характеристик</th>
+            <th>Цена</th>
+            <th>Ссылка на источник</th>
+            <th>Действия</th>
         </tr>
-    }
-</table>
-
-
+        <tbody>
+        @foreach (var device in Result.Devices)
+        {
+            <tr>
+                <th>@device.Name</th>
+                <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentEssential</th>
+                <th>@Result.ResultsDevices.FirstOrDefault(r => r.DeviceId == device.Id)?.PercentUnessential</th>
+                <th>@device.Price</th>
+                <th>@device.Url</th>
+                <th>
+                        <button class="button" @onclick="() => CompareCharacteristics(device)">Сравнить характеристики</button>
+                </th>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,21 +1,27 @@
-﻿<table border="1">
-    <tr>
-        <th>Название характеристики</th>
-        <th>Значение от пользователя</th>
-        <th>Значение характеристики прибора</th>
-    </tr>
-    @foreach (var characteristic in CharacteristicsForFind)
-    {
+﻿
+
+<div class="modal-wrapper">
+    <table class="table">
         <tr>
-            <th>
-                @characteristic.Name
-            </th>
-            <th>
-                @GetValueCharacteristic(characteristic)
-            </th>
-            <th>
-               @GetValue(characteristic)
-            </th>
+            <th>Название характеристики</th>
+            <th>Значение от пользователя</th>
+            <th>Значение характеристики прибора</th>
         </tr>
-    }
-</table>
+        <tbody>
+            @foreach (var characteristic in CharacteristicsForFind)
+            {
+                <tr>
+                    <th>
+                        @characteristic.Name
+                    </th>
+                    <th>
+                        @GetValueCharacteristic(characteristic)
+                    </th>
+                    <th>
+                        @GetValue(characteristic)
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -4,16 +4,25 @@
 @inject NavigationManager Manager
 @inject HttpClient httpClient
 
-<h1>Регистрация</h1>
-<h3>Введите ФИО</h3>
-<input type="text" @oninput="(e) => _name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<input type="checkbox" id="expert" @onchange="(e) => _isExpert = bool.Parse(e.Value.ToString())" />
-<label for="expert">Эксперт</label>
-<h3>Введите логин</h3>
-<input type="text" @oninput="(e) => _login = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<h3>Введите пароль</h3>
-<input type="password" @oninput="(e) => _password = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<h3>Подтверждение пароля</h3>
-<input type="password" @oninput="(e) => _passwordAck = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
-<button @onclick="() => Register()">Зарегистрироваться</button>
-<button @onclick="() => GoToEntry()">Вернуться на страницу авторизации</button>
+<div class="wrapper">
+	<h1>Регистрация</h1>
+	<h3>Введите ФИО</h3>
+	<input type="text" @oninput="(e) => _name = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<div class="registration-expert_label">
+		<input type="checkbox" id="expert" @onchange="(e) => _isExpert = bool.Parse(e.Value.ToString())" />
+		<label for="expert" class="registration-expert_label-desc">Эксперт</label>
+	</div>
+
+	<h3>Введите логин</h3>
+	<input type="text" @oninput="(e) => _login = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<h3>Введите пароль</h3>
+	<input type="password" @oninput="(e) => _password = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<h3>Подтверждение пароля</h3>
+	<input type="password" @oninput="(e) => _passwordAck = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString()" />
+	<div class="registration-buttons">
+		<button class="button" @onclick="() => Register()">Зарегистрироваться</button>
+		<button class="button" @onclick="() => GoToEntry()">Вернуться на страницу авторизации</button>
+	</div>
+</div>
+
+

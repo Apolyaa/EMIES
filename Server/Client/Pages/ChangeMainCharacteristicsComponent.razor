@@ -3,7 +3,9 @@
 @inject HttpClient httpClient
 @inject IComponentBus Bus
 @inject NavigationManager Manager
-<table border="1">
+<div class="modal-wrapper">
+
+<table class="table">
     @foreach(var characteristic in _allCharacteristics)
     {
         <tr>
@@ -15,4 +17,5 @@
         </tr>
     }
 </table>
-<button @onclick="() => SaveCharacteristics()">Сохранить изменения</button>
+<button class="button" @onclick="() => SaveCharacteristics()">Сохранить изменения</button>
+</div>

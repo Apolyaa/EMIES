@@ -4,27 +4,35 @@
 @inject HttpClient httpClient
 @inject IComponentBus Bus
 
-<p>Поиск</p>
-<input type="text" @oninput="(e) => _findText = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString() " />
-<table border="1">
-    @foreach (var characteristic in _characteristics)
-    {
-        <tr>
-            @if (!string.IsNullOrEmpty(_findText))
+
+<div class="modal-wrapper">
+    <p>Поиск</p>
+    <input type="text" @oninput="(e) => _findText = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString() " />
+    <table class="table">
+        <tbody>
+            @foreach (var characteristic in _characteristics)
             {
-                @if (characteristic.Name.ToLower().Contains(_findText.ToLower()))
-                {
-                    <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
-                }
+                <tr>
+                    @if (!string.IsNullOrEmpty(_findText))
+                    {
+                        @if (characteristic.Name.ToLower().Contains(_findText.ToLower()))
+                        {
+                            <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+                        }
+                    }
+                    else
+                    {
+                        <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+                    }
+                </tr>
             }
-            else
-            {
-                <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
-            }
-        </tr>
-    }
-</table>
-<button @onclick="() => AddCharacteristic()">Выбрать</button>
+        </tbody>
+    </table>
+    <button class="button" @onclick="() => AddCharacteristic()">Выбрать</button>
+
+</div>
+
+
 
 
 
