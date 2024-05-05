@@ -4,6 +4,7 @@ using Blazored.Modal.Services;
 using Client.Contracts;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace Client.Pages
 {
@@ -67,6 +68,16 @@ namespace Client.Pages
         public void SaveCharacteristics()
         {
             var data = new AddCharacteristicEvent() { Characteristics = _characteristics };
+            var errorCharacteristic = _characteristics
+               .Where(c => (c.Type == TypeCharacteristicConstants.NUMBER || c.Type == TypeCharacteristicConstants.RANGE) && c.Unit.Id == Guid.Empty);
+            StringBuilder stringBuilder = new();
+            if (errorCharacteristic.Any())
+            {
+                foreach (var characteristic in errorCharacteristic)
+                    stringBuilder.AppendLine($"Не указана единица измерения у характеристики {characteristic.Name}.");
+                ShowError(stringBuilder.ToString());
+                return;
+            }
             Bus.Publish(data);
         }
         public void AddCharacteristic()
