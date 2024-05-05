@@ -8,7 +8,7 @@
 <div class="modal-wrapper">
     <p>Поиск</p>
     <input type="text" @oninput="(e) => _findText = string.IsNullOrEmpty(e.Value.ToString()) ? string.Empty : e.Value.ToString() " />
-    <table class="table">
+    <table class="table table-characteristic">
         <tbody>
             @foreach (var characteristic in _characteristics)
             {
@@ -17,12 +17,12 @@
                     {
                         @if (characteristic.Name.ToLower().Contains(_findText.ToLower()))
                         {
-                            <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+                            <th class="@GetCssClass(characteristic)" @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
                         }
                     }
                     else
                     {
-                        <th @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
+                        <th class="@GetCssClass(characteristic)" @onclick="() => SelectCharacteristic(characteristic.Name)">@characteristic.Name</th>
                     }
                 </tr>
             }

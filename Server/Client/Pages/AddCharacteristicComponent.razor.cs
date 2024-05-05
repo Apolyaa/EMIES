@@ -33,5 +33,13 @@ namespace Client.Pages
         {
             Modal.Show<ErrorComponent>(message);
         }
+
+        public string GetCssClass(DictionaryOfCharacteristicDto dictionaryOfCharacteristicDto)
+        {
+            if (_selectCharacteristic == dictionaryOfCharacteristicDto)
+                return "active";
+
+            return string.Empty;
+        }
     }
 }

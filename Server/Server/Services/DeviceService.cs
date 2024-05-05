@@ -15,12 +15,13 @@ namespace Server.Services
         private readonly IProducerService _producerService;
         private readonly ITypeOfDeviceService _typeOfDeviceService;
         private readonly IResultDeviceRepository _resultDeviceRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IResultRepository _resultRepository;
         private readonly IMapper _mapper;
         public DeviceService(IDeviceRepository deviceRepository, ICharacteristicService characteristicService,
             ISourceService sourceService, IProducerService producerService, IMapper mapper, 
             ITypeOfDeviceService typeOfDeviceService, IResultDeviceRepository resultDeviceRepository,
-            IResultRepository resultRepository)
+            IResultRepository resultRepository, IUserRepository userRepository)
         {
             _deviceRepository = deviceRepository;
             _characteristicService = characteristicService;
@@ -30,15 +31,17 @@ namespace Server.Services
             _typeOfDeviceService = typeOfDeviceService;
             _resultDeviceRepository = resultDeviceRepository;
             _resultRepository = resultRepository;
+            _userRepository = userRepository;
         }
         public Response<ResultDto> GetSuitableDevices(Guid typeId, List<CharacteristicForFindDto> characteristicForFinds)
         {
             Response<ResultDto> response = new();
+            var userId = _userRepository.GetAll().FirstOrDefault(t => t.Role == 0).Id;
             ResultEntity resultEntity = new() 
             { 
                 Id = Guid.NewGuid(),
                 InitialData = JsonSerializer.Serialize(characteristicForFinds),
-                UserId = Guid.Parse("52b8cf62-0c6e-4c32-8549-c89763580369")
+                UserId = userId
             };
             _resultRepository.Insert(resultEntity);
             _resultRepository.Save();

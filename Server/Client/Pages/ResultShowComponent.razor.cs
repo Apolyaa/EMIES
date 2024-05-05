@@ -27,7 +27,7 @@ namespace Client.Pages
                 .Add(nameof(ShowCompareCharacteristicsComponent.Characteristics), device.Characteristics);
             var options = new ModalOptions()
             {
-                Size = ModalSize.Large
+                Size = ModalSize.ExtraLarge
             };
             _compareCharacteristic = Modal.Show<ShowCompareCharacteristicsComponent>("Сравнение характеристик", parameters, options);
         }

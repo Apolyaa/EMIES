@@ -12,15 +12,15 @@
     </div>
         <div class="main">
 
-        <p>Выберите тип прибора</p>
-        <select @onchange="(e) => SelectType(e.Value.ToString())">
+        <p class="subtitle">Выберите тип прибора</p>
+        <select class="selector" @onchange="(e) => SelectType(e.Value.ToString())">
             @foreach (var type in _types)
             {
                 <option>@type.Name</option>
             }
         </select>
         <table class="table">
-            <caption>Таблица характеристик</caption>
+            <caption class="subtitle">Таблица характеристик</caption>
             <tr>
                 <th>Название</th>
                 <th>Тип значения</th>
@@ -37,7 +37,7 @@
                     <tr>
                         <th>@characteristic.Name</th>
                         <th>
-                            <select @onchange="(e) => SelectTypeCharacteristic(characteristic.Id, e.Value.ToString())">
+                                <select class="selector" @onchange="(e) => SelectTypeCharacteristic(characteristic.Id, e.Value.ToString())">
                                 <option>Диапазон</option>
                                 <option>Число</option>
                                 <option>Строка</option>

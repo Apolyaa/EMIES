@@ -32,7 +32,10 @@ namespace Client.Pages
             var response = await httpClient.GetAsync("http://localhost:5102/gettypes");
             var result = await response.Content.ReadFromJsonAsync<Response<List<TypeOfDeviceDto>>>();
             if (result is not null && result.Success)
+            {
                 _types = result.Data!;
+                SelectType(_types.FirstOrDefault().Name);
+            }
             else
                 ShowError(result.Message);
             var responseUnits = await httpClient.GetAsync("http://localhost:5102/getunits");
@@ -130,7 +133,7 @@ namespace Client.Pages
             var parameters = new ModalParameters().Add(nameof(ResultShowComponent.Result), _result);
             var options = new ModalOptions()
             {
-                Size = ModalSize.Large
+                Size = ModalSize.ExtraLarge
             };
             _resultShow = Modal.Show<ResultShowComponent>("Результат подбора оборудования", parameters, options);
 
